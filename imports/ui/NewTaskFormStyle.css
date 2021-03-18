@@ -1,0 +1,11 @@
+.NewTaskForm {
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+}
+
+.NewTaskForm .NewTaskNameInput {
+  flex: auto;
+  font-size: large;
+  padding: 5px;
+}

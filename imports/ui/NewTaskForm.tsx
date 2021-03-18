@@ -1,4 +1,5 @@
 import React from "react";
+import "./NewTaskFormStyle.css";
 
 export function NewTaskForm({
   createTask,
@@ -6,15 +7,22 @@ export function NewTaskForm({
   createTask: (name: string) => void;
 }) {
   const [name, setName] = React.useState("");
+
+  function reset() {
+    setName("");
+  }
+
   return (
     <form
+      className="NewTaskForm"
       onSubmit={(e) => {
         e.preventDefault();
         createTask(name);
-        setName("");
+        reset();
       }}
     >
       <input
+        className="NewTaskNameInput"
         name="name"
         type="text"
         value={name}
@@ -23,7 +31,9 @@ export function NewTaskForm({
         }}
         autoComplete="off"
       />
-      <button type="submit">Add Task</button>
+      <button className="NewTaskSubmit" type="submit">
+        Add Task
+      </button>
     </form>
   );
 }

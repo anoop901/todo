@@ -1,0 +1,13 @@
+.TaskList {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  background-color: #ddd;
+}
+
+.TaskListEmpty {
+  text-align: center;
+  padding: 30px;
+  font-size: small;
+  color: #888;
+}

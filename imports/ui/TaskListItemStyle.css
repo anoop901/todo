@@ -1,0 +1,8 @@
+.TaskListItem {
+  background-color: #fff;
+  padding: 8px;
+}
+
+.TaskListItem:not(:last-child) {
+  border-bottom: 1px solid #ddd;
+}
