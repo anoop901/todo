@@ -21,6 +21,7 @@ export function NewTaskForm({
         onChange={(e) => {
           setName(e.currentTarget.value);
         }}
+        autoComplete="off"
       />
       <button type="submit">Add Task</button>
     </form>
