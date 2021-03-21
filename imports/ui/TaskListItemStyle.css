@@ -10,6 +10,7 @@
 .TaskListItem:first-child {
   border-radius: 10px 10px 0 0;
 }
+
 .TaskListItem:last-child {
   border-radius: 0 0 10px 10px;
 }
