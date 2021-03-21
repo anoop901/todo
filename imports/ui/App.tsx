@@ -11,7 +11,7 @@ export function App() {
     <div className="App">
       <NewTaskForm
         createTask={(name) => {
-          TaskCollection.insert({ name });
+          TaskCollection.insert({ name, state: "incomplete" });
         }}
       />
       <TaskList tasks={tasks} />
