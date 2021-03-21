@@ -6,3 +6,7 @@
 .TaskListItem:not(:last-child) {
   border-bottom: 1px solid #ddd;
 }
+
+.TaskListItem .TaskListItemCheckbox {
+  margin-right: 8px;
+}
