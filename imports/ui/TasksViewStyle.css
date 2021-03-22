@@ -1,11 +1,11 @@
-.App {
+.TasksView {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
 }
 
-.App .TaskList {
+.TasksView .TaskList {
   flex: auto;
   overflow: auto;
 }
