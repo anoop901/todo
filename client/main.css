@@ -28,7 +28,6 @@ button {
   background-color: #2973fc;
   border-radius: 3px;
   padding: 10px;
-  font-size: large;
   color: #ffffff;
   cursor: pointer;
 }
@@ -39,4 +38,9 @@ button:hover {
 
 button:active {
   background-color: #002f94;
+}
+
+button[disabled] {
+  background-color: #aaaaaa;
+  cursor: auto;
 }
