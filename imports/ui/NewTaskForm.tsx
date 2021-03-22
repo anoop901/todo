@@ -2,7 +2,7 @@ import React from "react";
 import { TaskCollection } from "../api/Task";
 import "./NewTaskForm.css";
 
-export function NewTaskForm() {
+export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
   const [name, setName] = React.useState("");
 
   function reset() {
@@ -16,6 +16,7 @@ export function NewTaskForm() {
         e.preventDefault();
         TaskCollection.insert({ name, state: "incomplete" });
         reset();
+        closeForm();
       }}
     >
       <h2>Create Task</h2>
