@@ -3,7 +3,7 @@ import React from "react";
 import { TaskCollection } from "../api/Task";
 import { NewTaskForm } from "./NewTaskForm";
 import { TaskList } from "./TaskList";
-import "./TasksViewStyle.css";
+import "./TasksView.css";
 
 export function TasksView() {
   const tasks = useTracker(() => TaskCollection.find().fetch());

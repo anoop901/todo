@@ -1,7 +1,7 @@
 import React from "react";
 import { Task } from "../api/Task";
 import { TaskListItem } from "./TaskListItem";
-import "./TaskListStyle.css";
+import "./TaskList.css";
 
 export function TaskList({ tasks }: { tasks: Task[] }) {
   return tasks.length === 0 ? (

@@ -1,6 +1,6 @@
 import React from "react";
 import { Task, TaskCollection } from "../api/Task";
-import "./TaskListItemStyle.css";
+import "./TaskListItem.css";
 
 export function TaskListItem({ task }: { task: Task }) {
   return (
