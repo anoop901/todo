@@ -13,6 +13,7 @@ export function TasksView() {
       <div className="TasksViewMain">
         <div className="CreateTaskButtonRow">
           <button
+            disabled={createTaskSidebarOpen}
             className="CreateTaskButton"
             onClick={() => {
               setCreateTaskSidebarOpen(true);
