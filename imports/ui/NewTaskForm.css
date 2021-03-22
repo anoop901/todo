@@ -12,5 +12,12 @@
 }
 
 .NewTaskForm > * {
-  margin: 10px 0;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.NewTaskFormButtonRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }

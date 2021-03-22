@@ -7,6 +7,7 @@ export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
 
   function reset() {
     setName("");
+    closeForm();
   }
 
   return (
@@ -16,7 +17,6 @@ export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
         e.preventDefault();
         TaskCollection.insert({ name, state: "incomplete" });
         reset();
-        closeForm();
       }}
     >
       <h2>Create Task</h2>
@@ -31,9 +31,20 @@ export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
         }}
         autoComplete="off"
       />
-      <button className="NewTaskSubmit" type="submit">
-        Create
-      </button>
+      <div className="NewTaskFormButtonRow">
+        <button
+          className="NewTaskDiscardButton"
+          type="button"
+          onClick={() => {
+            reset();
+          }}
+        >
+          Discard
+        </button>
+        <button className="NewTaskSubmit" type="submit">
+          Create
+        </button>
+      </div>
     </form>
   );
 }
