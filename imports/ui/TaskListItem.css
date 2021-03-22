@@ -1,10 +1,10 @@
 .TaskListItem {
-  background-color: #fff;
   padding: 8px;
+  border: 1px solid #cccccc;
 }
 
 .TaskListItem:not(:last-child) {
-  border-bottom: 1px solid #ddd;
+  border-bottom: none;
 }
 
 .TaskListItem:first-child {

@@ -9,3 +9,25 @@
   flex: auto;
   overflow: auto;
 }
+
+.CreateTaskButtonRow {
+  padding: 5px 3px;
+}
+
+.TasksView .CreateTaskButton {
+  font-size: large;
+  color: #ffffff;
+  background-color: #2973fc;
+  border: none;
+  border-radius: 3px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.TasksView .CreateTaskButton:hover {
+  background-color: #3d65d4;
+}
+
+.TasksView .CreateTaskButton:active {
+  background-color: #002f94;
+}
