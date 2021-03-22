@@ -26,6 +26,7 @@ export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
         name="name"
         type="text"
         value={name}
+        required
         onChange={(e) => {
           setName(e.currentTarget.value);
         }}
