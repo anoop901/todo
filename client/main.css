@@ -12,3 +12,31 @@ body,
   margin: 0;
   padding: 0;
 }
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+button {
+  border: none;
+  background-color: #2973fc;
+  border-radius: 3px;
+  padding: 10px;
+  font-size: large;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #3d65d4;
+}
+
+button:active {
+  background-color: #002f94;
+}

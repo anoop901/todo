@@ -1,11 +1,16 @@
 .NewTaskForm {
-  padding: 0;
-  display: flex;
-  flex-direction: row;
+  padding: 10px;
+  width: 30%;
+  border-left: 2px solid #cccccc;
+  background-color: #eeeeee;
 }
 
 .NewTaskForm .NewTaskNameInput {
-  flex: auto;
   font-size: large;
   padding: 5px;
+  width: 100%;
+}
+
+.NewTaskForm > * {
+  margin: 10px 0;
 }

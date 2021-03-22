@@ -1,11 +1,8 @@
 import React from "react";
+import { TaskCollection } from "../api/Task";
 import "./NewTaskForm.css";
 
-export function NewTaskForm({
-  createTask,
-}: {
-  createTask: (name: string) => void;
-}) {
+export function NewTaskForm() {
   const [name, setName] = React.useState("");
 
   function reset() {
@@ -17,11 +14,13 @@ export function NewTaskForm({
       className="NewTaskForm"
       onSubmit={(e) => {
         e.preventDefault();
-        createTask(name);
+        TaskCollection.insert({ name, state: "incomplete" });
         reset();
       }}
     >
+      <h2>Create Task</h2>
       <input
+        placeholder="Name"
         className="NewTaskNameInput"
         name="name"
         type="text"
@@ -32,7 +31,7 @@ export function NewTaskForm({
         autoComplete="off"
       />
       <button className="NewTaskSubmit" type="submit">
-        Add Task
+        Create
       </button>
     </form>
   );
