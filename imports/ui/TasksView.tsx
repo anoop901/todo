@@ -7,27 +7,27 @@ import "./TasksView.css";
 
 export function TasksView() {
   const tasks = useTracker(() => TaskCollection.find().fetch());
-  const [createTaskSidebarOpen, setCreateTaskSidebarOpen] = useState(false);
+  const [newTaskSidebarOpen, setNewTaskSidebarOpen] = useState(false);
   return (
     <div className="TasksView">
       <div className="TasksViewMain">
-        <div className="CreateTaskButtonRow">
+        <div className="NewTaskButtonRow">
           <button
-            disabled={createTaskSidebarOpen}
-            className="CreateTaskButton"
+            disabled={newTaskSidebarOpen}
+            className="NewTaskButton"
             onClick={() => {
-              setCreateTaskSidebarOpen(true);
+              setNewTaskSidebarOpen(true);
             }}
           >
-            Create Task
+            New Task
           </button>
         </div>
         <TaskList tasks={tasks} />
       </div>
-      {createTaskSidebarOpen ? (
+      {newTaskSidebarOpen ? (
         <NewTaskForm
           closeForm={() => {
-            setCreateTaskSidebarOpen(false);
+            setNewTaskSidebarOpen(false);
           }}
         />
       ) : null}

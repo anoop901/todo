@@ -24,7 +24,7 @@ export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
         reset();
       }}
     >
-      <h2>Create Task</h2>
+      <h2>New Task</h2>
       <input
         ref={nameInputRef}
         placeholder="Name"
