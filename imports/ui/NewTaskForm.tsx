@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { TaskCollection } from "../api/Task";
 import "./NewTaskForm.css";
 
 export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
   const [name, setName] = React.useState("");
+
+  const nameInputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    nameInputRef.current?.focus();
+  }, []);
 
   function reset() {
     setName("");
@@ -21,6 +26,7 @@ export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
     >
       <h2>Create Task</h2>
       <input
+        ref={nameInputRef}
         placeholder="Name"
         className="NewTaskNameInput"
         name="name"
