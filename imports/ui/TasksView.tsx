@@ -21,6 +21,7 @@ export function TasksView() {
             className="NewTaskButton"
             onClick={() => {
               setCurrentMenu("NewTask");
+              setSelectedTaskId(null);
             }}
           >
             New Task
@@ -39,6 +40,7 @@ export function TasksView() {
         <NewTaskForm
           closeForm={() => {
             setCurrentMenu(null);
+            setSelectedTaskId(null);
           }}
         />
       ) : null}
@@ -47,6 +49,7 @@ export function TasksView() {
           task={TaskCollection.findOne({ _id: selectedTaskId })!}
           closeForm={() => {
             setCurrentMenu(null);
+            setSelectedTaskId(null);
           }}
         />
       ) : null}
