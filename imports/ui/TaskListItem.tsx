@@ -16,7 +16,7 @@ export function TaskListItem({
     <li
       className={classNames("TaskListItem", {
         TaskListItemSelected: selected,
-        TaskListItemIncomplete: task.state === "incomplete",
+        TaskListItemPending: task.state === "pending",
         TaskListItemComplete: task.state === "complete",
         TaskListItemDropped: task.state === "dropped",
       })}
@@ -42,7 +42,7 @@ export function TaskListItem({
           } else {
             TaskCollection.update(
               { _id: task._id },
-              { $set: { state: "incomplete" } }
+              { $set: { state: "pending" } }
             );
           }
         }}

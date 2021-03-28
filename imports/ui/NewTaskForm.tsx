@@ -20,7 +20,7 @@ export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
       className="NewTaskForm"
       onSubmit={(e) => {
         e.preventDefault();
-        TaskCollection.insert({ name, state: "incomplete" });
+        TaskCollection.insert({ name, state: "pending" });
         reset();
       }}
     >

@@ -60,7 +60,7 @@ export function TaskDetailsForm({
       />
       <p>This task is {task.state}.</p>
       <div className="TaskDetailsFormActionButtonRow">
-        {task.state === "incomplete" ? (
+        {task.state === "pending" ? (
           <button
             type="button"
             onClick={() => {
@@ -79,14 +79,14 @@ export function TaskDetailsForm({
             onClick={() => {
               TaskCollection.update(
                 { _id: task._id },
-                { $set: { state: "incomplete" } }
+                { $set: { state: "pending" } }
               );
             }}
           >
             Unmark as Complete
           </button>
         ) : null}
-        {task.state === "incomplete" ? (
+        {task.state === "pending" ? (
           <button
             type="button"
             onClick={() => {
@@ -105,7 +105,7 @@ export function TaskDetailsForm({
             onClick={() => {
               TaskCollection.update(
                 { _id: task._id },
-                { $set: { state: "incomplete" } }
+                { $set: { state: "pending" } }
               );
             }}
           >
