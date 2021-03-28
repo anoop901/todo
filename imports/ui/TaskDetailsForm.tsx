@@ -22,7 +22,18 @@ export function TaskDetailsForm({
 
   return (
     <form className="TaskDetailsForm">
-      <h2>Task Details</h2>
+      <div className="TaskDetailsFormHeader">
+        <h2>Task Details</h2>
+        <button
+          className="TaskDetailsFormCloseButton"
+          type="button"
+          onClick={() => {
+            closeForm();
+          }}
+        >
+          Close
+        </button>
+      </div>
       <input
         ref={nameInputRef}
         placeholder="Name"
@@ -95,17 +106,6 @@ export function TaskDetailsForm({
             Pick back up
           </button>
         ) : null}
-      </div>
-      <div className="TaskDetailsFormCloseButtonRow">
-        <button
-          className="TaskDetailsCloseButton"
-          type="button"
-          onClick={() => {
-            closeForm();
-          }}
-        >
-          Close
-        </button>
       </div>
     </form>
   );

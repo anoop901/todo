@@ -16,8 +16,25 @@
   margin-bottom: 10px;
 }
 
-.NewTaskForm .NewTaskFormButtonRow {
+.NewTaskForm .NewTaskFormActionButtonRow {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+}
+
+.NewTaskForm .NewTaskFormActionButtonRow > button {
+  flex: 1;
+}
+
+.NewTaskForm .NewTaskFormHeader {
+  display: flex;
+  flex-direction: row;
+}
+
+.NewTaskForm .NewTaskFormHeader > h2 {
+  flex: 1;
+  margin: 0;
+}
+
+.NewTaskForm .NewTaskFormHeader > .NewTaskFormDiscardButton {
+  align-self: center;
 }

@@ -25,8 +25,16 @@
   flex: 1;
 }
 
-.TaskDetailsForm .TaskDetailsFormCloseButtonRow {
+.TaskDetailsForm .TaskDetailsFormHeader {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+}
+
+.TaskDetailsForm .TaskDetailsFormHeader > h2 {
+  flex: 1;
+  margin: 0;
+}
+
+.TaskDetailsForm .TaskDetailsFormHeader > .TaskDetailsFormCloseButton {
+  align-self: center;
 }

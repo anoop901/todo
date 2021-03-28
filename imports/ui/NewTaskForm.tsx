@@ -24,7 +24,18 @@ export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
         reset();
       }}
     >
-      <h2>New Task</h2>
+      <div className="NewTaskFormHeader">
+        <h2>New Task</h2>
+        <button
+          className="NewTaskFormDiscardButton"
+          type="button"
+          onClick={() => {
+            reset();
+          }}
+        >
+          Discard
+        </button>
+      </div>
       <input
         ref={nameInputRef}
         placeholder="Name"
@@ -38,16 +49,7 @@ export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
         }}
         autoComplete="off"
       />
-      <div className="NewTaskFormButtonRow">
-        <button
-          className="NewTaskDiscardButton"
-          type="button"
-          onClick={() => {
-            reset();
-          }}
-        >
-          Discard
-        </button>
+      <div className="NewTaskFormActionButtonRow">
         <button className="NewTaskSubmit" type="submit">
           Create
         </button>
