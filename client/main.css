@@ -43,5 +43,5 @@ button:active {
 
 button[disabled] {
   background-color: #aaaaaa;
-  cursor: not-allowed;
+  cursor: auto;
 }
