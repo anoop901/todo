@@ -107,6 +107,17 @@ export function TaskDetailsForm({
           </button>
         ) : null}
       </div>
+      <div className="TaskDetailsFormActionButtonRow">
+        <button
+          type="button"
+          onClick={() => {
+            TaskCollection.remove({ _id: task._id });
+            closeForm();
+          }}
+        >
+          Delete
+        </button>
+      </div>
     </form>
   );
 }
