@@ -27,6 +27,9 @@ export function TaskListItem({
         type="checkbox"
         disabled={task.state === "dropped"}
         checked={task.state === "complete"}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
         onChange={(e) => {
           const checked = e.currentTarget.checked;
           if (checked) {
