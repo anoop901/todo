@@ -21,7 +21,13 @@ export function TaskDetailsForm({
   }, [task.name]);
 
   return (
-    <form className="TaskDetailsForm">
+    <form
+      className="TaskDetailsForm"
+      onSubmit={(e) => {
+        e.preventDefault();
+        closeForm();
+      }}
+    >
       <div className="TaskDetailsFormHeader">
         <h2>Task Details</h2>
         <button
