@@ -33,6 +33,7 @@
 .NewTaskForm .NewTaskFormHeader > h2 {
   flex: 1;
   margin: 0;
+  align-self: center;
 }
 
 .NewTaskForm .NewTaskFormHeader > .NewTaskFormDiscardButton {
