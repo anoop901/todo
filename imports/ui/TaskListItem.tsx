@@ -25,6 +25,7 @@ export function TaskListItem({
       <input
         className="TaskListItemCheckbox"
         type="checkbox"
+        disabled={task.state === "dropped"}
         checked={task.state === "complete"}
         onChange={(e) => {
           const checked = e.currentTarget.checked;
