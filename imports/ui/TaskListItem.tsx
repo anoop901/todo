@@ -14,7 +14,12 @@ export function TaskListItem({
 }) {
   return (
     <li
-      className={classNames("TaskListItem", { TaskListItemSelected: selected })}
+      className={classNames("TaskListItem", {
+        TaskListItemSelected: selected,
+        TaskListItemIncomplete: task.state === "incomplete",
+        TaskListItemComplete: task.state === "complete",
+        TaskListItemDropped: task.state === "dropped",
+      })}
       onClick={onClick}
     >
       <input

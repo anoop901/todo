@@ -21,6 +21,19 @@
   margin-right: 8px;
 }
 
+.TaskListItemIncomplete {
+  font-weight: bold;
+}
+
+.TaskListItemComplete {
+  color: #888888;
+}
+
+.TaskListItemDropped {
+  color: #888888;
+  text-decoration-line: line-through;
+}
+
 .TaskListItemSelected {
   background-color: #a8b5df;
   border-color: #484e61;
