@@ -23,7 +23,9 @@ export function TaskListItem({
       onClick={onClick}
     >
       <input
-        className="TaskListItemCheckbox"
+        className={classNames("TaskListItemCheckbox", {
+          TaskListItemCheckboxDropped: task.state === "dropped",
+        })}
         type="checkbox"
         disabled={task.state === "dropped"}
         checked={task.state === "complete"}

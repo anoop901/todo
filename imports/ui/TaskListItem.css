@@ -21,6 +21,10 @@
   margin-right: 8px;
 }
 
+.TaskListItem .TaskListItemCheckbox.TaskListItemCheckboxDropped {
+  visibility: hidden;
+}
+
 .TaskListItem.TaskListItemIncomplete {
   font-weight: bold;
 }
