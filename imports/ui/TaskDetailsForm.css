@@ -16,7 +16,16 @@
   margin-bottom: 10px;
 }
 
-.TaskDetailsFormButtonRow {
+.TaskDetailsFormActionButtonRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.TaskDetailsFormActionButtonRow > button {
+  flex: 1;
+}
+
+.TaskDetailsFormCloseButtonRow {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;

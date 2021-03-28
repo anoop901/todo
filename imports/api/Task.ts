@@ -1,6 +1,6 @@
 import { Mongo } from "meteor/mongo";
 
-type TaskState = "incomplete" | "complete";
+type TaskState = "incomplete" | "complete" | "dropped";
 
 export interface Task {
   _id: string;

@@ -41,7 +41,62 @@ export function TaskDetailsForm({
         }}
         autoComplete="off"
       />
-      <div className="TaskDetailsFormButtonRow">
+      <p>This task is {task.state}.</p>
+      <div className="TaskDetailsFormActionButtonRow">
+        {task.state === "incomplete" ? (
+          <button
+            type="button"
+            onClick={() => {
+              TaskCollection.update(
+                { _id: task._id },
+                { $set: { state: "complete" } }
+              );
+            }}
+          >
+            Mark as Complete
+          </button>
+        ) : null}
+        {task.state === "complete" ? (
+          <button
+            type="button"
+            onClick={() => {
+              TaskCollection.update(
+                { _id: task._id },
+                { $set: { state: "incomplete" } }
+              );
+            }}
+          >
+            Unmark as Complete
+          </button>
+        ) : null}
+        {task.state === "incomplete" ? (
+          <button
+            type="button"
+            onClick={() => {
+              TaskCollection.update(
+                { _id: task._id },
+                { $set: { state: "dropped" } }
+              );
+            }}
+          >
+            Drop
+          </button>
+        ) : null}
+        {task.state === "dropped" ? (
+          <button
+            type="button"
+            onClick={() => {
+              TaskCollection.update(
+                { _id: task._id },
+                { $set: { state: "incomplete" } }
+              );
+            }}
+          >
+            Pick back up
+          </button>
+        ) : null}
+      </div>
+      <div className="TaskDetailsFormCloseButtonRow">
         <button
           className="TaskDetailsCloseButton"
           type="button"
