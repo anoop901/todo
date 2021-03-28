@@ -1,33 +1,52 @@
 import { useTracker } from "meteor/react-meteor-data";
 import React, { useState } from "react";
-import { TaskCollection } from "../api/Task";
+import { Task, TaskCollection } from "../api/Task";
+import { TaskDetailsForm } from "./TaskDetailsForm";
 import { NewTaskForm } from "./NewTaskForm";
 import { TaskList } from "./TaskList";
 import "./TasksView.css";
 
 export function TasksView() {
   const tasks = useTracker(() => TaskCollection.find().fetch());
-  const [newTaskSidebarOpen, setNewTaskSidebarOpen] = useState(false);
+  const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
+  const [currentMenu, setCurrentMenu] = useState<
+    "TaskDetails" | "NewTask" | null
+  >(null);
   return (
     <div className="TasksView">
       <div className="TasksViewMain">
         <div className="NewTaskButtonRow">
           <button
-            disabled={newTaskSidebarOpen}
+            disabled={currentMenu === "NewTask"}
             className="NewTaskButton"
             onClick={() => {
-              setNewTaskSidebarOpen(true);
+              setCurrentMenu("NewTask");
             }}
           >
             New Task
           </button>
         </div>
-        <TaskList tasks={tasks} />
+        <TaskList
+          tasks={tasks}
+          selectedTaskId={selectedTaskId}
+          setSelectedTaskId={(newSelectedTaskId) => {
+            setCurrentMenu("TaskDetails");
+            setSelectedTaskId(newSelectedTaskId);
+          }}
+        />
       </div>
-      {newTaskSidebarOpen ? (
+      {currentMenu === "NewTask" ? (
         <NewTaskForm
           closeForm={() => {
-            setNewTaskSidebarOpen(false);
+            setCurrentMenu(null);
+          }}
+        />
+      ) : null}
+      {currentMenu === "TaskDetails" && selectedTaskId !== null ? (
+        <TaskDetailsForm
+          task={TaskCollection.findOne({ _id: selectedTaskId })!}
+          closeForm={() => {
+            setCurrentMenu(null);
           }}
         />
       ) : null}

@@ -1,10 +1,22 @@
+import classNames from "classnames";
 import React from "react";
 import { Task, TaskCollection } from "../api/Task";
 import "./TaskListItem.css";
 
-export function TaskListItem({ task }: { task: Task }) {
+export function TaskListItem({
+  task,
+  onClick,
+  selected,
+}: {
+  task: Task;
+  onClick?: () => void;
+  selected: boolean;
+}) {
   return (
-    <li className="TaskListItem">
+    <li
+      className={classNames("TaskListItem", { TaskListItemSelected: selected })}
+      onClick={onClick}
+    >
       <input
         className="TaskListItemCheckbox"
         type="checkbox"

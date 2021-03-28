@@ -20,3 +20,12 @@
 .TaskListItem .TaskListItemCheckbox {
   margin-right: 8px;
 }
+
+.TaskListItemSelected {
+  background-color: #a8b5df;
+  border-color: #484e61;
+}
+
+.TaskListItemSelected + .TaskListItem {
+  border-top-color: #484e61;
+}
