@@ -1,4 +1,9 @@
-import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBan,
+  faCheck,
+  faTrash,
+  faWindowClose,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useRef, useState } from "react";
 import { Task, TaskCollection } from "../api/Task";
@@ -72,7 +77,7 @@ export function TaskDetailsForm({
               );
             }}
           >
-            Mark as Complete
+            <FontAwesomeIcon icon={faCheck} /> Mark as Complete
           </button>
         ) : null}
         {task.state === "complete" ? (
@@ -98,7 +103,7 @@ export function TaskDetailsForm({
               );
             }}
           >
-            Drop
+            <FontAwesomeIcon icon={faBan} /> Drop
           </button>
         ) : null}
         {task.state === "dropped" ? (
@@ -123,7 +128,7 @@ export function TaskDetailsForm({
             closeForm();
           }}
         >
-          Delete
+          <FontAwesomeIcon icon={faTrash} /> Delete
         </button>
       </div>
     </form>
