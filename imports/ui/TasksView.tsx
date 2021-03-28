@@ -5,6 +5,8 @@ import { TaskDetailsForm } from "./TaskDetailsForm";
 import { NewTaskForm } from "./NewTaskForm";
 import { TaskList } from "./TaskList";
 import "./TasksView.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export function TasksView() {
   const tasks = useTracker(() => TaskCollection.find().fetch());
@@ -24,7 +26,7 @@ export function TasksView() {
               setSelectedTaskId(null);
             }}
           >
-            New Task
+            <FontAwesomeIcon icon={faPlus} /> New Task
           </button>
         </div>
         <TaskList

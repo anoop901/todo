@@ -1,3 +1,5 @@
+import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useRef, useState } from "react";
 import { Task, TaskCollection } from "../api/Task";
 import "./TaskDetailsForm.css";
@@ -37,7 +39,7 @@ export function TaskDetailsForm({
             closeForm();
           }}
         >
-          Close
+          <FontAwesomeIcon icon={faWindowClose} />
         </button>
       </div>
       <input
