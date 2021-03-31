@@ -1,11 +1,17 @@
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Mongo } from "meteor/mongo";
 import React, { useEffect, useRef } from "react";
-import { TaskCollection } from "../api/Task";
+import { Task, TaskCollection } from "../api/Task";
 import "./NewTaskForm.css";
+import { TaskConfigInputs } from "./TaskConfigInputs";
 
 export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
-  const [name, setName] = React.useState("");
+  const initialTask: Mongo.OptionalId<Task> = {
+    name: "",
+    state: "pending",
+  };
+  const [task, setTask] = React.useState(initialTask);
 
   const nameInputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
@@ -13,7 +19,7 @@ export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
   }, []);
 
   function reset() {
-    setName("");
+    setTask(initialTask);
     closeForm();
   }
 
@@ -22,7 +28,7 @@ export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
       className="NewTaskForm"
       onSubmit={(e) => {
         e.preventDefault();
-        TaskCollection.insert({ name, state: "pending" });
+        TaskCollection.insert(task);
         reset();
       }}
     >
@@ -38,19 +44,7 @@ export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
           <FontAwesomeIcon icon={faWindowClose} />
         </button>
       </div>
-      <input
-        ref={nameInputRef}
-        placeholder="Name"
-        className="NewTaskNameInput"
-        name="name"
-        type="text"
-        value={name}
-        required
-        onChange={(e) => {
-          setName(e.currentTarget.value);
-        }}
-        autoComplete="off"
-      />
+      <TaskConfigInputs task={task} setTask={setTask} />
       <div className="NewTaskFormActionButtonRow">
         <button className="NewTaskSubmit" type="submit">
           Create

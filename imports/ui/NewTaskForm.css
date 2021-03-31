@@ -5,12 +5,6 @@
   background-color: #eeeeee;
 }
 
-.NewTaskForm .NewTaskNameInput {
-  font-size: large;
-  padding: 5px;
-  width: 100%;
-}
-
 .NewTaskForm > * {
   margin-top: 10px;
   margin-bottom: 10px;
