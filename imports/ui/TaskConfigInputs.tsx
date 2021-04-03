@@ -1,7 +1,7 @@
 import { Mongo } from "meteor/mongo";
 import React, { useEffect, useRef } from "react";
 import { Task } from "../api/Task";
-import "./TaskConfigInputs.css";
+import "./TaskConfigInputsStyles.css";
 
 export function TaskConfigInputs({
   task,
