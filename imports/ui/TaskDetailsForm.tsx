@@ -7,7 +7,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useRef, useState } from "react";
 import { Task, TaskCollection } from "../api/Task";
-import "./TaskDetailsForm.css";
+import "./TaskDetailsFormStyles.css";
 
 export function TaskDetailsForm({
   task,

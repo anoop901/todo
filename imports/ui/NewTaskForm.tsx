@@ -2,7 +2,7 @@ import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useRef } from "react";
 import { TaskCollection } from "../api/Task";
-import "./NewTaskForm.css";
+import "./NewTaskFormStyles.css";
 
 export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
   const [name, setName] = React.useState("");

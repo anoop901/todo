@@ -4,7 +4,7 @@ import { TaskCollection } from "../api/Task";
 import { TaskDetailsForm } from "./TaskDetailsForm";
 import { NewTaskForm } from "./NewTaskForm";
 import { TaskList } from "./TaskList";
-import "./TasksView.css";
+import "./TasksViewStyles.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
