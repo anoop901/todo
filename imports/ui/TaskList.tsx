@@ -1,7 +1,7 @@
 import React from "react";
 import { Task } from "../api/Task";
 import { TaskListItem } from "./TaskListItem";
-import "./TaskList.css";
+import "./TaskListStyles.css";
 
 export function TaskList({
   tasks,

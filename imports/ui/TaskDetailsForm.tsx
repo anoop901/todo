@@ -9,7 +9,7 @@ import { Mongo } from "meteor/mongo";
 import React, { useEffect, useState } from "react";
 import { Task, TaskCollection } from "../api/Task";
 import { TaskConfigInputs } from "./TaskConfigInputs";
-import "./TaskDetailsForm.css";
+import "./TaskDetailsFormStyles.css";
 
 export function TaskDetailsForm({
   task,

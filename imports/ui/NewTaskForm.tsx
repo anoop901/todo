@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Mongo } from "meteor/mongo";
 import React, { useEffect, useRef } from "react";
 import { Task, TaskCollection } from "../api/Task";
-import "./NewTaskForm.css";
+import "./NewTaskFormStyles.css";
 import { TaskConfigInputs } from "./TaskConfigInputs";
 
 export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
