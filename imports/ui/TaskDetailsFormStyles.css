@@ -5,12 +5,6 @@
   background-color: #eeeeee;
 }
 
-.TaskDetailsForm .EditTaskNameInput {
-  font-size: large;
-  padding: 5px;
-  width: 100%;
-}
-
 .TaskDetailsForm > * {
   margin-top: 10px;
   margin-bottom: 10px;
