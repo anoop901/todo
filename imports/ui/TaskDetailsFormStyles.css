@@ -2,29 +2,4 @@
   border-left: 2px solid #cccccc;
   background-color: #eeeeee;
   overflow: auto;
-  display: flex;
-  flex-direction: column;
-}
-
-.TaskDetailsForm .TaskDetailsFormActionButtonRow {
-  display: flex;
-  flex-direction: row;
-}
-
-.TaskDetailsForm .TaskDetailsFormActionButtonRow > button {
-  flex: 1;
-}
-
-.TaskDetailsForm .TaskDetailsFormHeader {
-  display: flex;
-  flex-direction: row;
-}
-
-.TaskDetailsForm .TaskDetailsFormHeader > h2 {
-  flex: 1;
-  align-self: center;
-}
-
-.TaskDetailsForm .TaskDetailsFormHeader > .TaskDetailsFormCloseButton {
-  align-self: center;
 }

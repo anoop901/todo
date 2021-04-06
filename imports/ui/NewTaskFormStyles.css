@@ -2,29 +2,4 @@
   border-left: 2px solid #cccccc;
   background-color: #eeeeee;
   overflow: auto;
-  display: flex;
-  flex-direction: column;
-}
-
-.NewTaskForm .NewTaskFormActionButtonRow {
-  display: flex;
-  flex-direction: row;
-}
-
-.NewTaskForm .NewTaskFormActionButtonRow > button {
-  flex: 1;
-}
-
-.NewTaskForm .NewTaskFormHeader {
-  display: flex;
-  flex-direction: row;
-}
-
-.NewTaskForm .NewTaskFormHeader > h2 {
-  flex: 1;
-  align-self: center;
-}
-
-.NewTaskForm .NewTaskFormHeader > .NewTaskFormDiscardButton {
-  align-self: center;
 }

@@ -1,4 +1,4 @@
-import { Button, Grid, IconButton } from "@material-ui/core";
+import { Box, Button, Grid, IconButton } from "@material-ui/core";
 import { Mongo } from "meteor/mongo";
 import React, { FormEvent, useEffect, useRef } from "react";
 import { Task, TaskCollection } from "../api/Task";
@@ -37,19 +37,20 @@ export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
         reset();
       }}
     >
-      <div className="NewTaskFormHeader">
-        <h2>New Task</h2>
-        <IconButton
-          className="NewTaskFormDiscardButton"
-          onClick={() => {
-            reset();
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-      </div>
-      <TaskConfigInputs task={task} setTask={setTask} />
-      <div className="NewTaskFormActionButtonRow">
+      <Box display="flex" flexDirection="column">
+        <Box display="flex" alignItems="center">
+          <Box flex={1} component="h2">
+            New Task
+          </Box>
+          <IconButton
+            onClick={() => {
+              reset();
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </Box>
+        <TaskConfigInputs task={task} setTask={setTask} />
         <Button
           variant="contained"
           color="primary"
@@ -58,7 +59,7 @@ export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
         >
           Create
         </Button>
-      </div>
+      </Box>
     </Grid>
   );
 }
