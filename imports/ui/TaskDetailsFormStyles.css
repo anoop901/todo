@@ -6,11 +6,6 @@
   overflow: auto;
 }
 
-.TaskDetailsForm > * {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
 .TaskDetailsForm .TaskDetailsFormActionButtonRow {
   display: flex;
   flex-direction: row;
@@ -27,7 +22,6 @@
 
 .TaskDetailsForm .TaskDetailsFormHeader > h2 {
   flex: 1;
-  margin: 0;
   align-self: center;
 }
 

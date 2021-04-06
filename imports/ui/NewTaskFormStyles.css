@@ -6,11 +6,6 @@
   overflow: auto;
 }
 
-.NewTaskForm > * {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
 .NewTaskForm .NewTaskFormActionButtonRow {
   display: flex;
   flex-direction: row;
@@ -27,7 +22,6 @@
 
 .NewTaskForm .NewTaskFormHeader > h2 {
   flex: 1;
-  margin: 0;
   align-self: center;
 }
 
