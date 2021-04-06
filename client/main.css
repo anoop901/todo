@@ -8,11 +8,6 @@ body,
   font-family: sans-serif;
 }
 
-#react-target {
-  margin: 0;
-  padding: 0;
-}
-
 html {
   box-sizing: border-box;
 }
