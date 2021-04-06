@@ -8,9 +8,9 @@
 .TasksView .TasksViewMain {
   padding: 10px;
   flex: auto;
+  overflow: auto;
 }
 
 .TasksView .TaskList {
   flex: auto;
-  overflow: auto;
 }
