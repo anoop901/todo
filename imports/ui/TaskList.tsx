@@ -1,3 +1,4 @@
+import { List } from "@material-ui/core";
 import React from "react";
 import { Task } from "../api/Task";
 import { TaskListItem } from "./TaskListItem";
@@ -13,9 +14,9 @@ export function TaskList({
   setSelectedTaskId: (selectedTaskId: string | null) => void;
 }) {
   return tasks.length === 0 ? (
-    <p className="TaskList TaskListEmpty">No tasks yet.</p>
+    <p className="TaskListEmpty">No tasks yet.</p>
   ) : (
-    <ul className="TaskList">
+    <List>
       {tasks.map((task) => (
         <TaskListItem
           selected={selectedTaskId == task._id}
@@ -26,6 +27,6 @@ export function TaskList({
           task={task}
         />
       ))}
-    </ul>
+    </List>
   );
 }
