@@ -1,6 +1,6 @@
-import { Button, IconButton } from "@material-ui/core";
+import { Button, Grid, IconButton } from "@material-ui/core";
 import { Mongo } from "meteor/mongo";
-import React, { useEffect, useRef } from "react";
+import React, { FormEvent, useEffect, useRef } from "react";
 import { Task, TaskCollection } from "../api/Task";
 import "./NewTaskFormStyles.css";
 import { TaskConfigInputs } from "./TaskConfigInputs";
@@ -24,9 +24,14 @@ export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
   }
 
   return (
-    <form
+    <Grid
+      item
+      xs={12}
+      sm={6}
+      md={4}
       className="NewTaskForm"
-      onSubmit={(e) => {
+      component="form"
+      onSubmit={(e: FormEvent) => {
         e.preventDefault();
         TaskCollection.insert(task);
         reset();
@@ -54,6 +59,6 @@ export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
           Create
         </Button>
       </div>
-    </form>
+    </Grid>
   );
 }

@@ -1,6 +1,6 @@
-import { Button, IconButton } from "@material-ui/core";
+import { Button, Grid, IconButton } from "@material-ui/core";
 import { Mongo } from "meteor/mongo";
-import React, { useEffect, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import { Task, TaskCollection } from "../api/Task";
 import { TaskConfigInputs } from "./TaskConfigInputs";
 import "./TaskDetailsFormStyles.css";
@@ -25,9 +25,14 @@ export function TaskDetailsForm({
   }, [task]);
 
   return (
-    <form
+    <Grid
+      item
+      xs={12}
+      sm={6}
+      md={4}
+      component="form"
       className="TaskDetailsForm"
-      onSubmit={(e) => {
+      onSubmit={(e: FormEvent) => {
         e.preventDefault();
         closeForm();
       }}
@@ -129,6 +134,6 @@ export function TaskDetailsForm({
           Delete
         </Button>
       </div>
-    </form>
+    </Grid>
   );
 }
