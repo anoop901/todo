@@ -6,7 +6,6 @@
 }
 
 .TasksView .TasksViewMain {
-  padding: 10px;
   flex: auto;
   overflow: auto;
 }
