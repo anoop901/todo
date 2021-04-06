@@ -1,15 +1,15 @@
-import {
-  faBan,
-  faCheck,
-  faTrash,
-  faWindowClose,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Button, IconButton } from "@material-ui/core";
 import { Mongo } from "meteor/mongo";
 import React, { useEffect, useState } from "react";
 import { Task, TaskCollection } from "../api/Task";
 import { TaskConfigInputs } from "./TaskConfigInputs";
 import "./TaskDetailsFormStyles.css";
+import CheckIcon from "@material-ui/icons/Check";
+import UndoIcon from "@material-ui/icons/Undo";
+import ArchiveIcon from "@material-ui/icons/Archive";
+import UnarchiveIcon from "@material-ui/icons/Unarchive";
+import DeleteIcon from "@material-ui/icons/Delete";
+import CloseIcon from "@material-ui/icons/Close";
 
 export function TaskDetailsForm({
   task,
@@ -34,15 +34,14 @@ export function TaskDetailsForm({
     >
       <div className="TaskDetailsFormHeader">
         <h2>Task Details</h2>
-        <button
+        <IconButton
           className="TaskDetailsFormCloseButton"
-          type="button"
           onClick={() => {
             closeForm();
           }}
         >
-          <FontAwesomeIcon icon={faWindowClose} />
-        </button>
+          <CloseIcon />
+        </IconButton>
       </div>
       <TaskConfigInputs
         task={taskState}
@@ -57,68 +56,78 @@ export function TaskDetailsForm({
       <p>This task is {task.state}.</p>
       <div className="TaskDetailsFormActionButtonRow">
         {task.state === "pending" ? (
-          <button
-            type="button"
+          <Button
+            variant="contained"
+            color="primary"
             onClick={() => {
               TaskCollection.update(
                 { _id: task._id },
                 { $set: { state: "complete" } }
               );
             }}
+            startIcon={<CheckIcon />}
           >
-            <FontAwesomeIcon icon={faCheck} /> Mark as Complete
-          </button>
+            Mark as Complete
+          </Button>
         ) : null}
         {task.state === "complete" ? (
-          <button
-            type="button"
+          <Button
+            variant="contained"
+            color="primary"
             onClick={() => {
               TaskCollection.update(
                 { _id: task._id },
                 { $set: { state: "pending" } }
               );
             }}
+            startIcon={<UndoIcon />}
           >
             Unmark as Complete
-          </button>
+          </Button>
         ) : null}
         {task.state === "pending" ? (
-          <button
-            type="button"
+          <Button
+            variant="contained"
+            color="primary"
             onClick={() => {
               TaskCollection.update(
                 { _id: task._id },
                 { $set: { state: "dropped" } }
               );
             }}
+            startIcon={<ArchiveIcon />}
           >
-            <FontAwesomeIcon icon={faBan} /> Drop
-          </button>
+            Drop
+          </Button>
         ) : null}
         {task.state === "dropped" ? (
-          <button
-            type="button"
+          <Button
+            variant="contained"
+            color="primary"
             onClick={() => {
               TaskCollection.update(
                 { _id: task._id },
                 { $set: { state: "pending" } }
               );
             }}
+            startIcon={<UnarchiveIcon />}
           >
             Pick back up
-          </button>
+          </Button>
         ) : null}
       </div>
       <div className="TaskDetailsFormActionButtonRow">
-        <button
-          type="button"
+        <Button
+          variant="contained"
+          color="secondary"
           onClick={() => {
             TaskCollection.remove({ _id: task._id });
             closeForm();
           }}
+          startIcon={<DeleteIcon />}
         >
-          <FontAwesomeIcon icon={faTrash} /> Delete
-        </button>
+          Delete
+        </Button>
       </div>
     </form>
   );

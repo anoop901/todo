@@ -1,10 +1,10 @@
-import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Button, IconButton } from "@material-ui/core";
 import { Mongo } from "meteor/mongo";
 import React, { useEffect, useRef } from "react";
 import { Task, TaskCollection } from "../api/Task";
 import "./NewTaskFormStyles.css";
 import { TaskConfigInputs } from "./TaskConfigInputs";
+import CloseIcon from "@material-ui/icons/Close";
 
 export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
   const initialTask: Mongo.OptionalId<Task> = {
@@ -34,21 +34,25 @@ export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
     >
       <div className="NewTaskFormHeader">
         <h2>New Task</h2>
-        <button
+        <IconButton
           className="NewTaskFormDiscardButton"
-          type="button"
           onClick={() => {
             reset();
           }}
         >
-          <FontAwesomeIcon icon={faWindowClose} />
-        </button>
+          <CloseIcon />
+        </IconButton>
       </div>
       <TaskConfigInputs task={task} setTask={setTask} />
       <div className="NewTaskFormActionButtonRow">
-        <button className="NewTaskSubmit" type="submit">
+        <Button
+          variant="contained"
+          color="primary"
+          className="NewTaskSubmit"
+          type="submit"
+        >
           Create
-        </button>
+        </Button>
       </div>
     </form>
   );

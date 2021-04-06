@@ -22,31 +22,3 @@ html {
 *:after {
   box-sizing: inherit;
 }
-
-button {
-  margin: 0 5px;
-  border: none;
-  border-right: 1px solid #002f94;
-  border-bottom: 2px solid #002f94;
-  background-color: #2973fc;
-  border-radius: 15px;
-  padding: 10px;
-  color: #ffffff;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #3d65d4;
-}
-
-button:active {
-  background-color: #002f94;
-}
-
-button[disabled] {
-  border: none;
-  border-left: 1px solid #999999;
-  border-top: 2px solid #999999;
-  background-color: #aaaaaa;
-  cursor: auto;
-}

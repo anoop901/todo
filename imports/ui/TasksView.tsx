@@ -5,8 +5,8 @@ import { TaskDetailsForm } from "./TaskDetailsForm";
 import { NewTaskForm } from "./NewTaskForm";
 import { TaskList } from "./TaskList";
 import "./TasksViewStyles.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { Button } from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
 
 export function TasksView() {
   const tasks = useTracker(() => TaskCollection.find().fetch());
@@ -18,16 +18,19 @@ export function TasksView() {
     <div className="TasksView">
       <div className="TasksViewMain">
         <div className="NewTaskButtonRow">
-          <button
+          <Button
+            variant="contained"
+            color="primary"
             disabled={currentMenu === "NewTask"}
             className="NewTaskButton"
             onClick={() => {
               setCurrentMenu("NewTask");
               setSelectedTaskId(null);
             }}
+            startIcon={<AddIcon />}
           >
-            <FontAwesomeIcon icon={faPlus} /> New Task
-          </button>
+            New Task
+          </Button>
         </div>
         <TaskList
           tasks={tasks}
