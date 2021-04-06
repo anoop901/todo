@@ -1,3 +1,4 @@
+import { Checkbox } from "@material-ui/core";
 import classNames from "classnames";
 import React from "react";
 import { Task, TaskCollection } from "../api/Task";
@@ -22,11 +23,11 @@ export function TaskListItem({
       })}
       onClick={onClick}
     >
-      <input
+      <Checkbox
+        color="default"
         className={classNames("TaskListItemCheckbox", {
           TaskListItemCheckboxDropped: task.state === "dropped",
         })}
-        type="checkbox"
         disabled={task.state === "dropped"}
         checked={task.state === "complete"}
         onClick={(e) => {
