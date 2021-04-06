@@ -17,21 +17,19 @@ export function TasksView() {
   return (
     <div className="TasksView">
       <div className="TasksViewMain">
-        <div className="NewTaskButtonRow">
-          <Button
-            variant="contained"
-            color="primary"
-            disabled={currentMenu === "NewTask"}
-            className="NewTaskButton"
-            onClick={() => {
-              setCurrentMenu("NewTask");
-              setSelectedTaskId(null);
-            }}
-            startIcon={<AddIcon />}
-          >
-            New Task
-          </Button>
-        </div>
+        <Button
+          variant="contained"
+          color="primary"
+          disabled={currentMenu === "NewTask"}
+          className="NewTaskButton"
+          onClick={() => {
+            setCurrentMenu("NewTask");
+            setSelectedTaskId(null);
+          }}
+          startIcon={<AddIcon />}
+        >
+          New Task
+        </Button>
         <TaskList
           tasks={tasks}
           selectedTaskId={selectedTaskId}

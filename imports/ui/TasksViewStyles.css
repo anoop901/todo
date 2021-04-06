@@ -6,14 +6,11 @@
 }
 
 .TasksView .TasksViewMain {
+  padding: 10px;
   flex: auto;
 }
 
 .TasksView .TaskList {
   flex: auto;
   overflow: auto;
-}
-
-.TasksView .NewTaskButtonRow {
-  margin: 10px;
 }
