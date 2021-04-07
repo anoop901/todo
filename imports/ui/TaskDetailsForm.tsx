@@ -18,10 +18,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import CloseIcon from "@material-ui/icons/Close";
 
 const useStyles = makeStyles({
-  root: {
-    borderLeft: "2px solid #cccccc",
-    backgroundColor: "#eeeeee",
-    overflow: "auto",
+  invisible: {
+    display: "none",
   },
 });
 
@@ -41,108 +39,104 @@ export function TaskDetailsForm({
   const classes = useStyles();
 
   return (
-    <Grid
-      item
-      xs={12}
-      sm={6}
-      md={4}
+    <Box
+      display="flex"
+      flexDirection="column"
       component="form"
-      className={classes.root}
       onSubmit={(e: FormEvent) => {
         e.preventDefault();
         closeForm();
       }}
     >
-      <Box display="flex" flexDirection="column">
-        <Box display="flex" alignItems="center">
-          <Box flex={1} component="h2">
-            Task Details
-          </Box>
-          <IconButton
-            onClick={() => {
-              closeForm();
-            }}
-          >
-            <CloseIcon />
-          </IconButton>
+      <Box display="flex" alignItems="center">
+        <Box flex={1} component="h2">
+          Task Details
         </Box>
-        <TaskConfigInputs
-          task={taskState}
-          setTask={(newTask) => {
-            setTaskState(newTask);
-            TaskCollection.update(
-              { _id: task._id },
-              { ...newTask, _id: task._id }
-            );
-          }}
-        />
-        <p>This task is {task.state}.</p>
-        <ButtonGroup variant="contained" color="primary" fullWidth>
-          {task.state === "pending" ? (
-            <Button
-              onClick={() => {
-                TaskCollection.update(
-                  { _id: task._id },
-                  { $set: { state: "complete" } }
-                );
-              }}
-              startIcon={<CheckIcon />}
-            >
-              Mark as Complete
-            </Button>
-          ) : null}
-          {task.state === "complete" ? (
-            <Button
-              onClick={() => {
-                TaskCollection.update(
-                  { _id: task._id },
-                  { $set: { state: "pending" } }
-                );
-              }}
-              startIcon={<UndoIcon />}
-            >
-              Unmark as Complete
-            </Button>
-          ) : null}
-          {task.state === "pending" ? (
-            <Button
-              onClick={() => {
-                TaskCollection.update(
-                  { _id: task._id },
-                  { $set: { state: "dropped" } }
-                );
-              }}
-              startIcon={<ArchiveIcon />}
-            >
-              Drop
-            </Button>
-          ) : null}
-          {task.state === "dropped" ? (
-            <Button
-              onClick={() => {
-                TaskCollection.update(
-                  { _id: task._id },
-                  { $set: { state: "pending" } }
-                );
-              }}
-              startIcon={<UnarchiveIcon />}
-            >
-              Pick back up
-            </Button>
-          ) : null}
-        </ButtonGroup>
-        <Button
-          variant="contained"
-          color="secondary"
+        <IconButton
           onClick={() => {
-            TaskCollection.remove({ _id: task._id });
             closeForm();
           }}
-          startIcon={<DeleteIcon />}
         >
-          Delete
-        </Button>
+          <CloseIcon />
+        </IconButton>
       </Box>
-    </Grid>
+      <TaskConfigInputs
+        task={taskState}
+        setTask={(newTask) => {
+          setTaskState(newTask);
+          TaskCollection.update(
+            { _id: task._id },
+            { ...newTask, _id: task._id }
+          );
+        }}
+      />
+      <p>This task is {task.state}.</p>
+      <ButtonGroup variant="contained" color="primary" fullWidth>
+        {task.state === "pending" ? (
+          <Button
+            onClick={() => {
+              TaskCollection.update(
+                { _id: task._id },
+                { $set: { state: "complete" } }
+              );
+            }}
+            startIcon={<CheckIcon />}
+          >
+            Mark as Complete
+          </Button>
+        ) : null}
+        {task.state === "complete" ? (
+          <Button
+            onClick={() => {
+              TaskCollection.update(
+                { _id: task._id },
+                { $set: { state: "pending" } }
+              );
+            }}
+            startIcon={<UndoIcon />}
+          >
+            Unmark as Complete
+          </Button>
+        ) : null}
+        {task.state === "pending" ? (
+          <Button
+            onClick={() => {
+              TaskCollection.update(
+                { _id: task._id },
+                { $set: { state: "dropped" } }
+              );
+            }}
+            startIcon={<ArchiveIcon />}
+          >
+            Drop
+          </Button>
+        ) : null}
+        {task.state === "dropped" ? (
+          <Button
+            onClick={() => {
+              TaskCollection.update(
+                { _id: task._id },
+                { $set: { state: "pending" } }
+              );
+            }}
+            startIcon={<UnarchiveIcon />}
+          >
+            Pick back up
+          </Button>
+        ) : null}
+      </ButtonGroup>
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={() => {
+          TaskCollection.remove({ _id: task._id });
+          closeForm();
+        }}
+        startIcon={<DeleteIcon />}
+      >
+        Delete
+      </Button>
+      <Button type="submit" className={classes.invisible}></Button>
+    </Box>
   );
 }

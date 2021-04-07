@@ -5,14 +5,6 @@ import { Task, TaskCollection } from "../api/Task";
 import { TaskConfigInputs } from "./TaskConfigInputs";
 import CloseIcon from "@material-ui/icons/Close";
 
-const useStyles = makeStyles({
-  root: {
-    borderLeft: "2px solid #cccccc",
-    backgroundColor: "#eeeeee",
-    overflow: "auto",
-  },
-});
-
 export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
   const initialTask: Mongo.OptionalId<Task> = {
     name: "",
@@ -25,20 +17,15 @@ export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
     nameInputRef.current?.focus();
   }, []);
 
-  const classes = useStyles();
-
   function reset() {
     setTask(initialTask);
     closeForm();
   }
 
   return (
-    <Grid
-      item
-      xs={12}
-      sm={6}
-      md={4}
-      className={classes.root}
+    <Box
+      display="flex"
+      flexDirection="column"
       component="form"
       onSubmit={(e: FormEvent) => {
         e.preventDefault();
@@ -46,24 +33,22 @@ export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
         reset();
       }}
     >
-      <Box display="flex" flexDirection="column">
-        <Box display="flex" alignItems="center">
-          <Box flex={1} component="h2">
-            New Task
-          </Box>
-          <IconButton
-            onClick={() => {
-              reset();
-            }}
-          >
-            <CloseIcon />
-          </IconButton>
+      <Box display="flex" alignItems="center">
+        <Box flex={1} component="h2">
+          New Task
         </Box>
-        <TaskConfigInputs task={task} setTask={setTask} />
-        <Button variant="contained" color="primary" type="submit">
-          Create
-        </Button>
+        <IconButton
+          onClick={() => {
+            reset();
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
       </Box>
-    </Grid>
+      <TaskConfigInputs task={task} setTask={setTask} />
+      <Button variant="contained" color="primary" type="submit">
+        Create
+      </Button>
+    </Box>
   );
 }

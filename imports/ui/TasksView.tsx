@@ -1,5 +1,5 @@
 import { useTracker } from "meteor/react-meteor-data";
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { TaskCollection } from "../api/Task";
 import { TaskDetailsForm } from "./TaskDetailsForm";
 import { NewTaskForm } from "./NewTaskForm";
@@ -15,6 +15,11 @@ const useStyles = makeStyles({
     height: "100%",
   },
   main: {
+    overflow: "auto",
+  },
+  sidebar: {
+    borderLeft: "2px solid #cccccc",
+    backgroundColor: "#eeeeee",
     overflow: "auto",
   },
 });
@@ -58,22 +63,26 @@ export function TasksView() {
           />
         </Grid>
       </Hidden>
-      {currentMenu === "NewTask" ? (
-        <NewTaskForm
-          closeForm={() => {
-            setCurrentMenu(null);
-            setSelectedTaskId(null);
-          }}
-        />
-      ) : null}
-      {currentMenu === "TaskDetails" && selectedTaskId !== null ? (
-        <TaskDetailsForm
-          task={TaskCollection.findOne({ _id: selectedTaskId })!}
-          closeForm={() => {
-            setCurrentMenu(null);
-            setSelectedTaskId(null);
-          }}
-        />
+      {currentMenu !== null ? (
+        <Grid item xs={12} sm={6} md={4} className={classes.sidebar}>
+          {currentMenu === "NewTask" ? (
+            <NewTaskForm
+              closeForm={() => {
+                setCurrentMenu(null);
+                setSelectedTaskId(null);
+              }}
+            />
+          ) : null}
+          {currentMenu === "TaskDetails" && selectedTaskId !== null ? (
+            <TaskDetailsForm
+              task={TaskCollection.findOne({ _id: selectedTaskId })!}
+              closeForm={() => {
+                setCurrentMenu(null);
+                setSelectedTaskId(null);
+              }}
+            />
+          ) : null}
+        </Grid>
       ) : null}
     </Grid>
   );
