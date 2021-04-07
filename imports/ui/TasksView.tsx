@@ -1,5 +1,5 @@
 import { useTracker } from "meteor/react-meteor-data";
-import React, { FormEvent, useState } from "react";
+import React, { useState } from "react";
 import { TaskCollection } from "../api/Task";
 import { TaskDetailsForm } from "./TaskDetailsForm";
 import { NewTaskForm } from "./NewTaskForm";

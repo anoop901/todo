@@ -1,4 +1,4 @@
-import { Box, Button, Grid, IconButton, makeStyles } from "@material-ui/core";
+import { Box, Button, IconButton } from "@material-ui/core";
 import { Mongo } from "meteor/mongo";
 import React, { FormEvent, useEffect, useRef } from "react";
 import { Task, TaskCollection } from "../api/Task";
