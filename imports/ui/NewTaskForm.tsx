@@ -1,9 +1,15 @@
-import { Box, Button, IconButton } from "@material-ui/core";
+import { Box, Button, IconButton, makeStyles } from "@material-ui/core";
 import { Mongo } from "meteor/mongo";
 import React, { FormEvent, useEffect, useRef } from "react";
 import { Task, TaskCollection } from "../api/Task";
 import { TaskConfigInputs } from "./TaskConfigInputs";
 import CloseIcon from "@material-ui/icons/Close";
+
+const useStyles = makeStyles((theme) => ({
+  margins: {
+    margin: theme.spacing(1),
+  },
+}));
 
 export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
   const initialTask: Mongo.OptionalId<Task> = {
@@ -16,6 +22,8 @@ export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
   useEffect(() => {
     nameInputRef.current?.focus();
   }, []);
+
+  const classes = useStyles();
 
   function reset() {
     setTask(initialTask);
@@ -46,7 +54,12 @@ export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
         </IconButton>
       </Box>
       <TaskConfigInputs task={task} setTask={setTask} />
-      <Button variant="contained" color="primary" type="submit">
+      <Button
+        variant="contained"
+        color="primary"
+        type="submit"
+        className={classes.margins}
+      >
         Create
       </Button>
     </Box>

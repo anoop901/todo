@@ -16,11 +16,14 @@ import UnarchiveIcon from "@material-ui/icons/Unarchive";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CloseIcon from "@material-ui/icons/Close";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   invisible: {
     display: "none",
   },
-});
+  margins: {
+    margin: theme.spacing(1),
+  },
+}));
 
 export function TaskDetailsForm({
   task,
@@ -70,7 +73,12 @@ export function TaskDetailsForm({
         }}
       />
       <p>This task is {task.state}.</p>
-      <ButtonGroup variant="contained" color="primary" fullWidth>
+      <ButtonGroup
+        variant="contained"
+        color="primary"
+        orientation="vertical"
+        className={classes.margins}
+      >
         {task.state === "pending" ? (
           <Button
             onClick={() => {
@@ -127,6 +135,7 @@ export function TaskDetailsForm({
       <Button
         variant="contained"
         color="secondary"
+        className={classes.margins}
         onClick={() => {
           TaskCollection.remove({ _id: task._id });
           closeForm();

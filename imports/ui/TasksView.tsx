@@ -9,7 +9,7 @@ import AddIcon from "@material-ui/icons/Add";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     height: "100%",
@@ -22,7 +22,10 @@ const useStyles = makeStyles({
     backgroundColor: "#eeeeee",
     overflow: "auto",
   },
-});
+  margins: {
+    margin: theme.spacing(1),
+  },
+}));
 
 export function TasksView() {
   const tasks = useTracker(() => TaskCollection.find().fetch());
@@ -50,6 +53,7 @@ export function TasksView() {
               setSelectedTaskId(null);
             }}
             startIcon={<AddIcon />}
+            className={classes.margins}
           >
             New Task
           </Button>
