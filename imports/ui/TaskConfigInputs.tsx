@@ -21,7 +21,6 @@ export function TaskConfigInputs({
         variant="outlined"
         inputRef={nameInputRef}
         label="Name"
-        className="TaskConfigTextInput"
         value={task.name}
         required
         onChange={(e) => {
@@ -31,7 +30,6 @@ export function TaskConfigInputs({
       />
       <DateTimePicker
         inputVariant="outlined"
-        className="TaskConfigTextInput"
         label="Planned date"
         clearable
         value={task.plannedDate ?? null}

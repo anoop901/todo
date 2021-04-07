@@ -4,11 +4,17 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  makeStyles,
 } from "@material-ui/core";
 import classNames from "classnames";
 import React from "react";
 import { Task, TaskCollection } from "../api/Task";
-import "./TaskListItemStyles.css";
+
+const useStyles = makeStyles({
+  droppedCheckbox: { visibility: "hidden" },
+  droppedText: { color: "#888888", textDecorationLine: "line-through" },
+  completeText: { color: "#888888" },
+});
 
 export function TaskListItem({
   task,
@@ -19,18 +25,14 @@ export function TaskListItem({
   onClick?: () => void;
   selected: boolean;
 }) {
+  const classes = useStyles();
   return (
-    <ListItem
-      className="TaskListItem"
-      button
-      selected={selected}
-      onClick={onClick}
-    >
+    <ListItem button selected={selected} onClick={onClick}>
       <ListItemIcon>
         <Checkbox
           color="default"
           className={classNames({
-            TaskListItemCheckboxDropped: task.state === "dropped",
+            [classes.droppedCheckbox]: task.state === "dropped",
           })}
           disabled={task.state === "dropped"}
           checked={task.state === "complete"}
@@ -55,8 +57,8 @@ export function TaskListItem({
       </ListItemIcon>
       <ListItemText
         className={classNames({
-          TaskListItemTextComplete: task.state === "complete",
-          TaskListItemTextDropped: task.state === "dropped",
+          [classes.completeText]: task.state === "complete",
+          [classes.droppedText]: task.state === "dropped",
         })}
       >
         <Box fontWeight={task.state === "pending" ? "bold" : "normal"}>

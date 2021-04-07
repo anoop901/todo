@@ -4,10 +4,20 @@ import { TaskCollection } from "../api/Task";
 import { TaskDetailsForm } from "./TaskDetailsForm";
 import { NewTaskForm } from "./NewTaskForm";
 import { TaskList } from "./TaskList";
-import "./TasksViewStyles.css";
 import { Button, Hidden } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { Grid } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles({
+  root: {
+    width: "100%",
+    height: "100%",
+  },
+  main: {
+    overflow: "auto",
+  },
+});
 
 export function TasksView() {
   const tasks = useTracker(() => TaskCollection.find().fetch());
@@ -15,21 +25,21 @@ export function TasksView() {
   const [currentMenu, setCurrentMenu] = useState<
     "TaskDetails" | "NewTask" | null
   >(null);
+  const classes = useStyles();
   return (
-    <Grid container wrap="nowrap" direction="row" className="TasksView">
+    <Grid container wrap="nowrap" direction="row" className={classes.root}>
       <Hidden xsDown={currentMenu !== null}>
         <Grid
           item
           xs={12}
           sm={currentMenu === null ? 12 : 6}
           md={currentMenu === null ? 12 : 8}
-          className="TasksViewMain"
+          className={classes.main}
         >
           <Button
             variant="contained"
             color="primary"
             disabled={currentMenu === "NewTask"}
-            className="NewTaskButton"
             onClick={() => {
               setCurrentMenu("NewTask");
               setSelectedTaskId(null);

@@ -1,8 +1,17 @@
-import { List } from "@material-ui/core";
+import { List, makeStyles } from "@material-ui/core";
 import React from "react";
 import { Task } from "../api/Task";
 import { TaskListItem } from "./TaskListItem";
-import "./TaskListStyles.css";
+
+const useStyles = makeStyles({
+  empty: {
+    textAlign: "center",
+    paddingTop: "30px",
+    fontSize: "small",
+    color: "#888",
+    fontStyle: "italic",
+  },
+});
 
 export function TaskList({
   tasks,
@@ -13,8 +22,9 @@ export function TaskList({
   selectedTaskId: string | null;
   setSelectedTaskId: (selectedTaskId: string | null) => void;
 }) {
+  const classes = useStyles();
   return tasks.length === 0 ? (
-    <p className="TaskListEmpty">No tasks yet.</p>
+    <p className={classes.empty}>No tasks yet.</p>
   ) : (
     <List>
       {tasks.map((task) => (

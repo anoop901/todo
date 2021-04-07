@@ -1,15 +1,29 @@
-import { Box, Button, ButtonGroup, Grid, IconButton } from "@material-ui/core";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Grid,
+  IconButton,
+  makeStyles,
+} from "@material-ui/core";
 import { Mongo } from "meteor/mongo";
 import React, { FormEvent, useEffect, useState } from "react";
 import { Task, TaskCollection } from "../api/Task";
 import { TaskConfigInputs } from "./TaskConfigInputs";
-import "./TaskDetailsFormStyles.css";
 import CheckIcon from "@material-ui/icons/Check";
 import UndoIcon from "@material-ui/icons/Undo";
 import ArchiveIcon from "@material-ui/icons/Archive";
 import UnarchiveIcon from "@material-ui/icons/Unarchive";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CloseIcon from "@material-ui/icons/Close";
+
+const useStyles = makeStyles({
+  root: {
+    borderLeft: "2px solid #cccccc",
+    backgroundColor: "#eeeeee",
+    overflow: "auto",
+  },
+});
 
 export function TaskDetailsForm({
   task,
@@ -24,6 +38,8 @@ export function TaskDetailsForm({
     setTaskState(task);
   }, [task]);
 
+  const classes = useStyles();
+
   return (
     <Grid
       item
@@ -31,7 +47,7 @@ export function TaskDetailsForm({
       sm={6}
       md={4}
       component="form"
-      className="TaskDetailsForm"
+      className={classes.root}
       onSubmit={(e: FormEvent) => {
         e.preventDefault();
         closeForm();
