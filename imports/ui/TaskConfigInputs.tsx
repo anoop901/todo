@@ -27,6 +27,7 @@ export function TaskConfigInputs({
           setTask({ ...task, name: e.currentTarget.value });
         }}
         autoComplete="off"
+        margin="normal"
       />
       <DateTimePicker
         inputVariant="outlined"
@@ -39,6 +40,7 @@ export function TaskConfigInputs({
             plannedDate: date ?? undefined,
           });
         }}
+        margin="normal"
       />
     </>
   );
