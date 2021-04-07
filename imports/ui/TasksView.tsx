@@ -63,7 +63,7 @@ export function TasksView() {
           />
         </Grid>
       </Hidden>
-      {currentMenu !== null ? (
+      <Hidden xsUp={currentMenu === null}>
         <Grid item xs={12} sm={6} md={4} className={classes.sidebar}>
           {currentMenu === "NewTask" ? (
             <NewTaskForm
@@ -83,7 +83,7 @@ export function TasksView() {
             />
           ) : null}
         </Grid>
-      ) : null}
+      </Hidden>
     </Grid>
   );
 }
