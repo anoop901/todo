@@ -6,8 +6,10 @@ import { TaskConfigInputs } from "./TaskConfigInputs";
 import CloseIcon from "@material-ui/icons/Close";
 
 const useStyles = makeStyles((theme) => ({
-  margins: {
-    margin: theme.spacing(1),
+  root: {
+    "& > *": {
+      margin: theme.spacing(1),
+    },
   },
 }));
 
@@ -35,6 +37,7 @@ export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
       display="flex"
       flexDirection="column"
       component="form"
+      className={classes.root}
       onSubmit={(e: FormEvent) => {
         e.preventDefault();
         TaskCollection.insert(task);
@@ -54,12 +57,7 @@ export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
         </IconButton>
       </Box>
       <TaskConfigInputs task={task} setTask={setTask} />
-      <Button
-        variant="contained"
-        color="primary"
-        type="submit"
-        className={classes.margins}
-      >
+      <Button variant="contained" color="primary" type="submit">
         Create
       </Button>
     </Box>

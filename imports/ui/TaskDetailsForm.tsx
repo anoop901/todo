@@ -20,8 +20,10 @@ const useStyles = makeStyles((theme) => ({
   invisible: {
     display: "none",
   },
-  margins: {
-    margin: theme.spacing(1),
+  root: {
+    "& > *": {
+      margin: theme.spacing(1),
+    },
   },
 }));
 
@@ -45,6 +47,7 @@ export function TaskDetailsForm({
       display="flex"
       flexDirection="column"
       component="form"
+      className={classes.root}
       onSubmit={(e: FormEvent) => {
         e.preventDefault();
         closeForm();
@@ -73,12 +76,7 @@ export function TaskDetailsForm({
         }}
       />
       <p>This task is {task.state}.</p>
-      <ButtonGroup
-        variant="contained"
-        color="primary"
-        orientation="vertical"
-        className={classes.margins}
-      >
+      <ButtonGroup variant="contained" color="primary" orientation="vertical">
         {task.state === "pending" ? (
           <Button
             onClick={() => {
@@ -135,7 +133,6 @@ export function TaskDetailsForm({
       <Button
         variant="contained"
         color="secondary"
-        className={classes.margins}
         onClick={() => {
           TaskCollection.remove({ _id: task._id });
           closeForm();
