@@ -2,7 +2,7 @@ import { Mongo } from "meteor/mongo";
 import React, { useEffect, useRef } from "react";
 import { Task } from "../api/Task";
 import { TextField } from "@material-ui/core";
-import { DateTimePicker } from "@material-ui/pickers";
+import { DateTimePicker, KeyboardDateTimePicker } from "@material-ui/pickers";
 
 export function TaskConfigInputs({
   task,

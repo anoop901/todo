@@ -4,7 +4,7 @@ import { TaskCollection } from "../api/Task";
 import { TaskDetailsForm } from "./TaskDetailsForm";
 import { NewTaskForm } from "./NewTaskForm";
 import { TaskList } from "./TaskList";
-import { Button, Hidden } from "@material-ui/core";
+import { Box, Button, Hidden } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
@@ -22,8 +22,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#eeeeee",
     overflow: "auto",
   },
-  margins: {
-    margin: theme.spacing(1),
+  controlRow: {
+    "& > *": {
+      margin: theme.spacing(1),
+    },
   },
 }));
 
@@ -39,24 +41,32 @@ export function TasksView() {
       <Hidden xsDown={currentMenu !== null}>
         <Grid
           item
+          container
+          direction="column"
           xs={12}
           sm={currentMenu === null ? 12 : 6}
           md={currentMenu === null ? 12 : 8}
           className={classes.main}
         >
-          <Button
-            variant="contained"
-            color="primary"
-            disabled={currentMenu === "NewTask"}
-            onClick={() => {
-              setCurrentMenu("NewTask");
-              setSelectedTaskId(null);
-            }}
-            startIcon={<AddIcon />}
-            className={classes.margins}
+          <Box
+            display="flex"
+            alignItems="center"
+            className={classes.controlRow}
           >
-            New Task
-          </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              disabled={currentMenu === "NewTask"}
+              onClick={() => {
+                setCurrentMenu("NewTask");
+                setSelectedTaskId(null);
+              }}
+              startIcon={<AddIcon />}
+            >
+              New Task
+            </Button>
+            <Box flex={1} />
+          </Box>
           <TaskList
             tasks={tasks}
             selectedTaskId={selectedTaskId}
