@@ -18,7 +18,7 @@ export function TaskConfigInputs({
   return (
     <>
       <TextField
-        variant="outlined"
+        variant="filled"
         inputRef={nameInputRef}
         label="Name"
         value={task.name}
@@ -29,7 +29,7 @@ export function TaskConfigInputs({
         autoComplete="off"
       />
       <DateTimePicker
-        inputVariant="outlined"
+        inputVariant="filled"
         label="Planned date"
         clearable
         value={task.plannedDate ?? null}
