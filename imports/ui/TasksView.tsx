@@ -40,6 +40,7 @@ export function TasksView() {
         <Grid
           item
           container
+          wrap="nowrap"
           direction="column"
           xs={12}
           sm={currentMenu === null ? 12 : 6}
