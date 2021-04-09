@@ -4,7 +4,7 @@ import { TaskCollection } from "../api/Task";
 import { TaskDetailsForm } from "./TaskDetailsForm";
 import { NewTaskForm } from "./NewTaskForm";
 import { TaskList } from "./TaskList";
-import { Box, Button, Hidden } from "@material-ui/core";
+import { Box, Button, Hidden, Paper } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
@@ -18,8 +18,6 @@ const useStyles = makeStyles((theme) => ({
     overflow: "auto",
   },
   sidebar: {
-    borderLeft: "2px solid #cccccc",
-    backgroundColor: "#eeeeee",
     overflow: "auto",
   },
   controlRow: {
@@ -78,7 +76,7 @@ export function TasksView() {
         </Grid>
       </Hidden>
       <Hidden xsUp={currentMenu === null}>
-        <Grid item xs={12} sm={6} md={4} className={classes.sidebar}>
+        <Grid item xs={12} sm={6} md={4} className={classes.sidebar} component={Paper} square elevation={12}>
           {currentMenu === "NewTask" ? (
             <NewTaskForm
               closeForm={() => {
