@@ -14,7 +14,7 @@ export function TaskConfigInputs({
   const nameInputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     nameInputRef.current?.focus();
-  }, []);
+  }, [task._id]);
   return (
     <>
       <TextField
