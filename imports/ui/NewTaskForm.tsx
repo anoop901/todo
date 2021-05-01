@@ -1,10 +1,17 @@
-import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Box, Button, IconButton, makeStyles } from "@material-ui/core";
 import { Mongo } from "meteor/mongo";
-import React, { useEffect, useRef } from "react";
+import React, { FormEvent, useEffect, useRef } from "react";
 import { Task, TaskCollection } from "../api/Task";
-import "./NewTaskFormStyles.css";
 import { TaskConfigInputs } from "./TaskConfigInputs";
+import CloseIcon from "@material-ui/icons/Close";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    "& > *": {
+      margin: theme.spacing(1),
+    },
+  },
+}));
 
 export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
   const initialTask: Mongo.OptionalId<Task> = {
@@ -18,38 +25,41 @@ export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
     nameInputRef.current?.focus();
   }, []);
 
+  const classes = useStyles();
+
   function reset() {
     setTask(initialTask);
     closeForm();
   }
 
   return (
-    <form
-      className="NewTaskForm"
-      onSubmit={(e) => {
+    <Box
+      display="flex"
+      flexDirection="column"
+      component="form"
+      className={classes.root}
+      onSubmit={(e: FormEvent) => {
         e.preventDefault();
         TaskCollection.insert(task);
         reset();
       }}
     >
-      <div className="NewTaskFormHeader">
-        <h2>New Task</h2>
-        <button
-          className="NewTaskFormDiscardButton"
-          type="button"
+      <Box display="flex" alignItems="center">
+        <Box flex={1} component="h2">
+          New Task
+        </Box>
+        <IconButton
           onClick={() => {
             reset();
           }}
         >
-          <FontAwesomeIcon icon={faWindowClose} />
-        </button>
-      </div>
+          <CloseIcon />
+        </IconButton>
+      </Box>
       <TaskConfigInputs task={task} setTask={setTask} />
-      <div className="NewTaskFormActionButtonRow">
-        <button className="NewTaskSubmit" type="submit">
-          Create
-        </button>
-      </div>
-    </form>
+      <Button variant="contained" color="primary" type="submit">
+        Create
+      </Button>
+    </Box>
   );
 }

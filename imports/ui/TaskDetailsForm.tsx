@@ -1,15 +1,31 @@
 import {
-  faBan,
-  faCheck,
-  faTrash,
-  faWindowClose,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+  Box,
+  Button,
+  ButtonGroup,
+  IconButton,
+  makeStyles,
+} from "@material-ui/core";
 import { Mongo } from "meteor/mongo";
-import React, { useEffect, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import { Task, TaskCollection } from "../api/Task";
 import { TaskConfigInputs } from "./TaskConfigInputs";
-import "./TaskDetailsFormStyles.css";
+import CheckIcon from "@material-ui/icons/Check";
+import UndoIcon from "@material-ui/icons/Undo";
+import ArchiveIcon from "@material-ui/icons/Archive";
+import UnarchiveIcon from "@material-ui/icons/Unarchive";
+import DeleteIcon from "@material-ui/icons/Delete";
+import CloseIcon from "@material-ui/icons/Close";
+
+const useStyles = makeStyles((theme) => ({
+  invisible: {
+    display: "none",
+  },
+  root: {
+    "& > *": {
+      margin: theme.spacing(1),
+    },
+  },
+}));
 
 export function TaskDetailsForm({
   task,
@@ -24,26 +40,31 @@ export function TaskDetailsForm({
     setTaskState(task);
   }, [task]);
 
+  const classes = useStyles();
+
   return (
-    <form
-      className="TaskDetailsForm"
-      onSubmit={(e) => {
+    <Box
+      display="flex"
+      flexDirection="column"
+      component="form"
+      className={classes.root}
+      onSubmit={(e: FormEvent) => {
         e.preventDefault();
         closeForm();
       }}
     >
-      <div className="TaskDetailsFormHeader">
-        <h2>Task Details</h2>
-        <button
-          className="TaskDetailsFormCloseButton"
-          type="button"
+      <Box display="flex" alignItems="center">
+        <Box flex={1} component="h2">
+          Task Details
+        </Box>
+        <IconButton
           onClick={() => {
             closeForm();
           }}
         >
-          <FontAwesomeIcon icon={faWindowClose} />
-        </button>
-      </div>
+          <CloseIcon />
+        </IconButton>
+      </Box>
       <TaskConfigInputs
         task={taskState}
         setTask={(newTask) => {
@@ -55,71 +76,72 @@ export function TaskDetailsForm({
         }}
       />
       <p>This task is {task.state}.</p>
-      <div className="TaskDetailsFormActionButtonRow">
+      <ButtonGroup variant="contained" color="primary" orientation="vertical">
         {task.state === "pending" ? (
-          <button
-            type="button"
+          <Button
             onClick={() => {
               TaskCollection.update(
                 { _id: task._id },
                 { $set: { state: "complete" } }
               );
             }}
+            startIcon={<CheckIcon />}
           >
-            <FontAwesomeIcon icon={faCheck} /> Mark as Complete
-          </button>
+            Mark as Complete
+          </Button>
         ) : null}
         {task.state === "complete" ? (
-          <button
-            type="button"
+          <Button
             onClick={() => {
               TaskCollection.update(
                 { _id: task._id },
                 { $set: { state: "pending" } }
               );
             }}
+            startIcon={<UndoIcon />}
           >
             Unmark as Complete
-          </button>
+          </Button>
         ) : null}
         {task.state === "pending" ? (
-          <button
-            type="button"
+          <Button
             onClick={() => {
               TaskCollection.update(
                 { _id: task._id },
                 { $set: { state: "dropped" } }
               );
             }}
+            startIcon={<ArchiveIcon />}
           >
-            <FontAwesomeIcon icon={faBan} /> Drop
-          </button>
+            Drop
+          </Button>
         ) : null}
         {task.state === "dropped" ? (
-          <button
-            type="button"
+          <Button
             onClick={() => {
               TaskCollection.update(
                 { _id: task._id },
                 { $set: { state: "pending" } }
               );
             }}
+            startIcon={<UnarchiveIcon />}
           >
             Pick back up
-          </button>
+          </Button>
         ) : null}
-      </div>
-      <div className="TaskDetailsFormActionButtonRow">
-        <button
-          type="button"
-          onClick={() => {
-            TaskCollection.remove({ _id: task._id });
-            closeForm();
-          }}
-        >
-          <FontAwesomeIcon icon={faTrash} /> Delete
-        </button>
-      </div>
-    </form>
+      </ButtonGroup>
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={() => {
+          TaskCollection.remove({ _id: task._id });
+          closeForm();
+        }}
+        startIcon={<DeleteIcon />}
+      >
+        Delete
+      </Button>
+      <Button type="submit" className={classes.invisible}></Button>
+    </Box>
   );
 }

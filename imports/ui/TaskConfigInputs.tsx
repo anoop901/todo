@@ -1,9 +1,8 @@
 import { Mongo } from "meteor/mongo";
 import React, { useEffect, useRef } from "react";
 import { Task } from "../api/Task";
-import "./TaskConfigInputsStyles.css";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import { TextField } from "@material-ui/core";
+import { DateTimePicker } from "@material-ui/pickers";
 
 export function TaskConfigInputs({
   task,
@@ -15,15 +14,14 @@ export function TaskConfigInputs({
   const nameInputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     nameInputRef.current?.focus();
-  }, []);
+    nameInputRef.current?.select();
+  }, [task._id]);
   return (
     <>
-      <input
-        ref={nameInputRef}
-        placeholder="Name"
-        className="TaskConfigTextInput"
-        name="name"
-        type="text"
+      <TextField
+        variant="filled"
+        inputRef={nameInputRef}
+        label="Name"
         value={task.name}
         required
         onChange={(e) => {
@@ -31,22 +29,18 @@ export function TaskConfigInputs({
         }}
         autoComplete="off"
       />
-      <div>
-        <DatePicker
-          className="TaskConfigTextInput"
-          selected={task.plannedDate}
-          onChange={(date) =>
-            setTask({
-              ...task,
-              plannedDate: (date as Date | null) ?? undefined,
-            })
-          }
-          showTimeSelect
-          dateFormat="Pp"
-          isClearable
-          placeholderText="Planned date"
-        />
-      </div>
+      <DateTimePicker
+        inputVariant="filled"
+        label="Planned date"
+        clearable
+        value={task.plannedDate ?? null}
+        onChange={(date) => {
+          setTask({
+            ...task,
+            plannedDate: date ?? undefined,
+          });
+        }}
+      />
     </>
   );
 }
