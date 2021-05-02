@@ -6,7 +6,6 @@ import { NewTaskForm } from "./NewTaskForm";
 import { TaskList } from "./TaskList";
 import { Box, Button, Drawer } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
-import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
