@@ -1,8 +1,8 @@
 import { Box, Button, makeStyles, TextField } from "@material-ui/core";
+import { Accounts } from "meteor/accounts-base";
 import { Meteor } from "meteor/meteor";
 import React, { useState } from "react";
-import { useHistory } from "react-router";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   formColumn: {
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function SignInForm() {
+export function SignUpForm() {
   const classes = useStyles();
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -28,17 +28,22 @@ export function SignInForm() {
         component="form"
         onSubmit={(e) => {
           e.preventDefault();
-          Meteor.loginWithPassword(username, password, (error) => {
+          Accounts.createUser({ username, password }, (error) => {
             if (error) {
               return;
             }
-            history.push("/tasks");
+            Meteor.loginWithPassword(username, password, (error) => {
+              if (error) {
+                return;
+              }
+              history.push("/tasks");
+            });
           });
         }}
       >
-        <h2>Sign in</h2>
+        <h2>Sign up</h2>
         <p>
-          New user? <Link to="/signup">Sign up.</Link>
+          Already have an account? <Link to="/signin">Sign in.</Link>
         </p>
         <TextField
           variant="filled"
@@ -60,7 +65,7 @@ export function SignInForm() {
           }}
         />
         <Button type="submit" variant="contained" color="primary">
-          Sign in
+          Sign up
         </Button>
       </Box>
     </Box>

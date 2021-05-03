@@ -10,6 +10,7 @@ import {
   BrowserRouter as Router,
   Switch,
 } from "react-router-dom";
+import { SignUpForm } from "./SignUpForm";
 
 export function App() {
   return (
@@ -19,6 +20,9 @@ export function App() {
         <Switch>
           <Route path="/signin">
             <SignInForm />
+          </Route>
+          <Route path="/signup">
+            <SignUpForm />
           </Route>
           <Route path="/tasks">
             <TasksView />
