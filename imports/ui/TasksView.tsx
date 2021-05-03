@@ -30,14 +30,14 @@ const useStyles = makeStyles((theme) => ({
 export function TasksView() {
   const user = useTracker(() => Meteor.user());
   const tasks = useTracker(() =>
-    user !== null ? TaskCollection.find({ owner: user._id }).fetch() : []
+    user != null ? TaskCollection.find({ owner: user._id }).fetch() : []
   );
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
   const [currentMenu, setCurrentMenu] = useState<
     "TaskDetails" | "NewTask" | null
   >(null);
   const classes = useStyles();
-  if (user === null) {
+  if (user == null) {
     return <Redirect to="/signin" />;
   }
   return (
