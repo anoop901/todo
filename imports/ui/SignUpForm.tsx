@@ -3,6 +3,7 @@ import { Accounts } from "meteor/accounts-base";
 import { Meteor } from "meteor/meteor";
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { ErrorMessage } from "./ErrorMessage";
 
 const useStyles = makeStyles((theme) => ({
   formColumn: {
@@ -18,6 +19,7 @@ export function SignUpForm() {
   const classes = useStyles();
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const history = useHistory();
   return (
     <Box display="flex" justifyContent="space-around">
@@ -30,10 +32,12 @@ export function SignUpForm() {
           e.preventDefault();
           Accounts.createUser({ username, password }, (error) => {
             if (error) {
+              setErrorMessage(error.message);
               return;
             }
             Meteor.loginWithPassword(username, password, (error) => {
               if (error) {
+                setErrorMessage(error.message);
                 return;
               }
               history.push("/tasks");
@@ -42,6 +46,7 @@ export function SignUpForm() {
         }}
       >
         <h2>Sign up</h2>
+        {errorMessage !== null && <ErrorMessage>{errorMessage}</ErrorMessage>}
         <p>
           Already have an account? <Link to="/signin">Sign in.</Link>
         </p>

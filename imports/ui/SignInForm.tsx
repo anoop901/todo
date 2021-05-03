@@ -3,6 +3,7 @@ import { Meteor } from "meteor/meteor";
 import React, { useState } from "react";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
+import { ErrorMessage } from "./ErrorMessage";
 
 const useStyles = makeStyles((theme) => ({
   formColumn: {
@@ -18,6 +19,7 @@ export function SignInForm() {
   const classes = useStyles();
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const history = useHistory();
   return (
     <Box display="flex" justifyContent="space-around">
@@ -30,6 +32,7 @@ export function SignInForm() {
           e.preventDefault();
           Meteor.loginWithPassword(username, password, (error) => {
             if (error) {
+              setErrorMessage(error.message);
               return;
             }
             history.push("/tasks");
@@ -37,6 +40,7 @@ export function SignInForm() {
         }}
       >
         <h2>Sign in</h2>
+        {errorMessage !== null && <ErrorMessage>{errorMessage}</ErrorMessage>}
         <p>
           New user? <Link to="/signup">Sign up.</Link>
         </p>
