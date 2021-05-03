@@ -1,7 +1,5 @@
 import { Box, Button, IconButton, makeStyles } from "@material-ui/core";
-import { Mongo } from "meteor/mongo";
 import React, { FormEvent, useEffect, useRef } from "react";
-import { Task, TaskCollection } from "../api/Task";
 import { TaskConfigInputs } from "./TaskConfigInputs";
 import CloseIcon from "@material-ui/icons/Close";
 import { useTracker } from "meteor/react-meteor-data";
