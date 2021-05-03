@@ -2,6 +2,7 @@ import { AppBar, Box, Button, Toolbar } from "@material-ui/core";
 import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
 import React from "react";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 export function TodoAppBar() {
   const user = useTracker(() => Meteor.user());
@@ -12,7 +13,8 @@ export function TodoAppBar() {
         <Box flex={1} />
         {user != null ? (
           <>
-            <span>Welcome, {user.username}!</span>
+            <AccountCircleIcon />
+            <span>{user.username}</span>
             <Button
               variant="text"
               color="inherit"
