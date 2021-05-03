@@ -45,12 +45,7 @@ export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
       className={classes.root}
       onSubmit={(e: FormEvent) => {
         e.preventDefault();
-        TaskCollection.insert({
-          name: name,
-          plannedDate: plannedDate ?? undefined,
-          state: "pending",
-          owner: user._id,
-        });
+        Meteor.call("task.new", name, plannedDate);
         reset();
       }}
     >
