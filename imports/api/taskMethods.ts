@@ -71,4 +71,18 @@ Meteor.methods({
 
     TaskCollection.update(taskId, { $set: { state } });
   },
+
+  "task.delete"(taskId) {
+    check(taskId, String);
+    const existingTask = TaskCollection.findOne(taskId);
+
+    if (existingTask === undefined) {
+      throw new Meteor.Error("Not found.");
+    }
+    if (!this.userId || this.userId !== existingTask.owner) {
+      throw new Meteor.Error("Not authorized.");
+    }
+
+    TaskCollection.remove(taskId);
+  },
 });

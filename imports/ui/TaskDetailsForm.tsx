@@ -6,7 +6,7 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import React, { FormEvent, useEffect } from "react";
-import { Task, TaskCollection } from "../api/Task";
+import { Task } from "../api/Task";
 import { TaskConfigInputs } from "./TaskConfigInputs";
 import CheckIcon from "@material-ui/icons/Check";
 import UndoIcon from "@material-ui/icons/Undo";
@@ -127,7 +127,7 @@ export function TaskDetailsForm({
         variant="contained"
         color="secondary"
         onClick={() => {
-          TaskCollection.remove({ _id: task._id });
+          Meteor.call("task.delete", task._id);
           closeForm();
         }}
         startIcon={<DeleteIcon />}
