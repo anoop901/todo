@@ -5,8 +5,7 @@ import {
   IconButton,
   makeStyles,
 } from "@material-ui/core";
-import { Mongo } from "meteor/mongo";
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { FormEvent, useEffect } from "react";
 import { Task, TaskCollection } from "../api/Task";
 import { TaskConfigInputs } from "./TaskConfigInputs";
 import CheckIcon from "@material-ui/icons/Check";
@@ -15,6 +14,7 @@ import ArchiveIcon from "@material-ui/icons/Archive";
 import UnarchiveIcon from "@material-ui/icons/Unarchive";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CloseIcon from "@material-ui/icons/Close";
+import { Meteor } from "meteor/meteor";
 
 const useStyles = makeStyles((theme) => ({
   invisible: {
@@ -72,15 +72,12 @@ export function TaskDetailsForm({
         name={name}
         setName={(newName) => {
           setName(newName);
-          TaskCollection.update({ _id: task._id }, { ...task, name: newName });
+          Meteor.call("task.setName", task._id, newName);
         }}
         plannedDate={plannedDate}
         setPlannedDate={(newPlannedDate) => {
           setPlannedDate(newPlannedDate);
-          TaskCollection.update(
-            { _id: task._id },
-            { ...task, plannedDate: newPlannedDate ?? undefined }
-          );
+          Meteor.call("task.setPlannedDate", task._id, newPlannedDate);
         }}
       />
       <p>This task is {task.state}.</p>

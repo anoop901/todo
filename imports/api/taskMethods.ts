@@ -11,6 +11,7 @@ Meteor.methods({
     if (!this.userId) {
       throw new Meteor.Error("Not authorized.");
     }
+
     TaskCollection.insert({
       owner: this.userId,
       name,
@@ -20,5 +21,39 @@ Meteor.methods({
   },
   foo(x) {
     console.log(x);
+  },
+
+  "task.setName"(taskId, name) {
+    check(taskId, String);
+    check(name, String);
+    const existingTask = TaskCollection.findOne(taskId);
+
+    if (existingTask === undefined) {
+      throw new Meteor.Error("Not found.");
+    }
+    if (!this.userId || this.userId !== existingTask.owner) {
+      throw new Meteor.Error("Not authorized.");
+    }
+
+    TaskCollection.update(taskId, { $set: { name } });
+  },
+
+  "task.setPlannedDate"(taskId, plannedDate) {
+    check(taskId, String);
+    check(plannedDate, Match.Maybe(Date));
+    const existingTask = TaskCollection.findOne(taskId);
+
+    if (existingTask === undefined) {
+      throw new Meteor.Error("Not found.");
+    }
+    if (!this.userId || this.userId !== existingTask.owner) {
+      throw new Meteor.Error("Not authorized.");
+    }
+
+    if (plannedDate === null) {
+      TaskCollection.update(taskId, { $unset: { plannedDate: 0 } });
+    } else {
+      TaskCollection.update(taskId, { $set: { plannedDate } });
+    }
   },
 });
