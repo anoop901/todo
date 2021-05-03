@@ -7,6 +7,8 @@ import { TaskList } from "./TaskList";
 import { Box, Button, Drawer } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { makeStyles } from "@material-ui/core";
+import { Redirect } from "react-router";
+import { Meteor } from "meteor/meteor";
 
 const useStyles = makeStyles((theme) => ({
   sidebar: {
@@ -32,7 +34,10 @@ export function TasksView() {
     "TaskDetails" | "NewTask" | null
   >(null);
   const classes = useStyles();
-  return (
+  const user = useTracker(() => Meteor.user());
+  return user === null ? (
+    <Redirect to="/signin" />
+  ) : (
     <>
       <Box display="flex" alignItems="center" className={classes.controlRow}>
         <Button
