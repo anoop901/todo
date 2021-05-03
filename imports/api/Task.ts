@@ -4,6 +4,7 @@ type TaskState = "pending" | "complete" | "dropped";
 
 export interface Task {
   _id: string;
+  owner: string; // id in users table
   name: string;
   state: TaskState;
   plannedDate?: Date;
