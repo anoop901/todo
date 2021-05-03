@@ -4,6 +4,8 @@ import React, { FormEvent, useEffect, useRef } from "react";
 import { Task, TaskCollection } from "../api/Task";
 import { TaskConfigInputs } from "./TaskConfigInputs";
 import CloseIcon from "@material-ui/icons/Close";
+import { useTracker } from "meteor/react-meteor-data";
+import { Meteor } from "meteor/meteor";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,9 +16,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
+  const user = useTracker(() => Meteor.user());
+  if (user === null) {
+    return null;
+  }
+
   const initialTask: Mongo.OptionalId<Task> = {
     name: "",
     state: "pending",
+    owner: user._id,
   };
   const [task, setTask] = React.useState(initialTask);
 
