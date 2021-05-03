@@ -56,4 +56,19 @@ Meteor.methods({
       TaskCollection.update(taskId, { $set: { plannedDate } });
     }
   },
+
+  "task.setState"(taskId, state) {
+    check(taskId, String);
+    check(state, Match.OneOf("pending", "complete", "dropped"));
+    const existingTask = TaskCollection.findOne(taskId);
+
+    if (existingTask === undefined) {
+      throw new Meteor.Error("Not found.");
+    }
+    if (!this.userId || this.userId !== existingTask.owner) {
+      throw new Meteor.Error("Not authorized.");
+    }
+
+    TaskCollection.update(taskId, { $set: { state } });
+  },
 });

@@ -85,10 +85,7 @@ export function TaskDetailsForm({
         {task.state === "pending" ? (
           <Button
             onClick={() => {
-              TaskCollection.update(
-                { _id: task._id },
-                { $set: { state: "complete" } }
-              );
+              Meteor.call("task.setState", task._id, "complete");
             }}
             startIcon={<CheckIcon />}
           >
@@ -98,10 +95,7 @@ export function TaskDetailsForm({
         {task.state === "complete" ? (
           <Button
             onClick={() => {
-              TaskCollection.update(
-                { _id: task._id },
-                { $set: { state: "pending" } }
-              );
+              Meteor.call("task.setState", task._id, "pending");
             }}
             startIcon={<UndoIcon />}
           >
@@ -111,10 +105,7 @@ export function TaskDetailsForm({
         {task.state === "pending" ? (
           <Button
             onClick={() => {
-              TaskCollection.update(
-                { _id: task._id },
-                { $set: { state: "dropped" } }
-              );
+              Meteor.call("task.setState", task._id, "dropped");
             }}
             startIcon={<ArchiveIcon />}
           >
@@ -124,10 +115,7 @@ export function TaskDetailsForm({
         {task.state === "dropped" ? (
           <Button
             onClick={() => {
-              TaskCollection.update(
-                { _id: task._id },
-                { $set: { state: "pending" } }
-              );
+              Meteor.call("task.setState", task._id, "pending");
             }}
             startIcon={<UnarchiveIcon />}
           >

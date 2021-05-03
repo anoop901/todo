@@ -7,8 +7,9 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import classNames from "classnames";
+import { Meteor } from "meteor/meteor";
 import React from "react";
-import { Task, TaskCollection } from "../api/Task";
+import { Task } from "../api/Task";
 
 const useStyles = makeStyles({
   droppedCheckbox: { visibility: "hidden" },
@@ -42,15 +43,9 @@ export function TaskListItem({
           onChange={(e) => {
             const checked = e.currentTarget.checked;
             if (checked) {
-              TaskCollection.update(
-                { _id: task._id },
-                { $set: { state: "complete" } }
-              );
+              Meteor.call("task.setState", task._id, "complete");
             } else {
-              TaskCollection.update(
-                { _id: task._id },
-                { $set: { state: "pending" } }
-              );
+              Meteor.call("task.setState", task._id, "pending");
             }
           }}
         />
