@@ -34,10 +34,12 @@ export function TaskDetailsForm({
   task: Task;
   closeForm: () => void;
 }) {
-  const [taskState, setTaskState] = useState<Mongo.OptionalId<Task>>(task);
+  const [name, setName] = React.useState("");
+  const [plannedDate, setPlannedDate] = React.useState<Date | null>(null);
 
   useEffect(() => {
-    setTaskState(task);
+    setName(task.name);
+    setPlannedDate(task.plannedDate ?? null);
   }, [task]);
 
   const classes = useStyles();
@@ -66,12 +68,18 @@ export function TaskDetailsForm({
         </IconButton>
       </Box>
       <TaskConfigInputs
-        task={taskState}
-        setTask={(newTask) => {
-          setTaskState(newTask);
+        taskId={task._id}
+        name={name}
+        setName={(newName) => {
+          setName(newName);
+          TaskCollection.update({ _id: task._id }, { ...task, name: newName });
+        }}
+        plannedDate={plannedDate}
+        setPlannedDate={(newPlannedDate) => {
+          setPlannedDate(newPlannedDate);
           TaskCollection.update(
             { _id: task._id },
-            { ...newTask, _id: task._id }
+            { ...task, plannedDate: newPlannedDate ?? undefined }
           );
         }}
       />

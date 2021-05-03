@@ -5,27 +5,33 @@ import { TextField } from "@material-ui/core";
 import { DateTimePicker } from "@material-ui/pickers";
 
 export function TaskConfigInputs({
-  task,
-  setTask,
+  taskId,
+  name,
+  setName,
+  plannedDate,
+  setPlannedDate,
 }: {
-  task: Mongo.OptionalId<Task>;
-  setTask: (task: Mongo.OptionalId<Task>) => void;
+  taskId?: string;
+  name: string;
+  setName: (name: string) => void;
+  plannedDate: Date | null;
+  setPlannedDate: (plannedDate: Date | null) => void;
 }) {
   const nameInputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     nameInputRef.current?.focus();
     nameInputRef.current?.select();
-  }, [task._id]);
+  }, [taskId]);
   return (
     <>
       <TextField
         variant="filled"
         inputRef={nameInputRef}
         label="Name"
-        value={task.name}
+        value={name}
         required
         onChange={(e) => {
-          setTask({ ...task, name: e.currentTarget.value });
+          setName(e.currentTarget.value);
         }}
         autoComplete="off"
       />
@@ -33,12 +39,9 @@ export function TaskConfigInputs({
         inputVariant="filled"
         label="Planned date"
         clearable
-        value={task.plannedDate ?? null}
-        onChange={(date) => {
-          setTask({
-            ...task,
-            plannedDate: date ?? undefined,
-          });
+        value={plannedDate}
+        onChange={(newPlannedDate) => {
+          setPlannedDate(newPlannedDate);
         }}
       />
     </>
