@@ -55,6 +55,7 @@ export function SignUpForm() {
           label="Username"
           value={username}
           required
+          inputProps={{ autoCapitalize: "off" }}
           onChange={(e) => {
             setUsername(e.currentTarget.value);
           }}
