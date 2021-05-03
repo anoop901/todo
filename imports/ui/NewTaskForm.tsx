@@ -1,7 +1,5 @@
 import { Box, Button, IconButton, makeStyles } from "@material-ui/core";
-import { Mongo } from "meteor/mongo";
 import React, { FormEvent, useEffect, useRef } from "react";
-import { Task, TaskCollection } from "../api/Task";
 import { TaskConfigInputs } from "./TaskConfigInputs";
 import CloseIcon from "@material-ui/icons/Close";
 import { useTracker } from "meteor/react-meteor-data";
@@ -21,12 +19,8 @@ export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
     return null;
   }
 
-  const initialTask: Mongo.OptionalId<Task> = {
-    name: "",
-    state: "pending",
-    owner: user._id,
-  };
-  const [task, setTask] = React.useState(initialTask);
+  const [name, setName] = React.useState("");
+  const [plannedDate, setPlannedDate] = React.useState<Date | null>(null);
 
   const nameInputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
@@ -36,7 +30,8 @@ export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
   const classes = useStyles();
 
   function reset() {
-    setTask(initialTask);
+    setName("");
+    setPlannedDate(null);
     closeForm();
   }
 
@@ -48,7 +43,7 @@ export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
       className={classes.root}
       onSubmit={(e: FormEvent) => {
         e.preventDefault();
-        TaskCollection.insert(task);
+        Meteor.call("task.new", name, plannedDate);
         reset();
       }}
     >
@@ -64,7 +59,12 @@ export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
           <CloseIcon />
         </IconButton>
       </Box>
-      <TaskConfigInputs task={task} setTask={setTask} />
+      <TaskConfigInputs
+        name={name}
+        setName={setName}
+        plannedDate={plannedDate}
+        setPlannedDate={setPlannedDate}
+      />
       <Button variant="contained" color="primary" type="submit">
         Create
       </Button>

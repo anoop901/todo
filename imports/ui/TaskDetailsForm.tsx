@@ -5,9 +5,8 @@ import {
   IconButton,
   makeStyles,
 } from "@material-ui/core";
-import { Mongo } from "meteor/mongo";
-import React, { FormEvent, useEffect, useState } from "react";
-import { Task, TaskCollection } from "../api/Task";
+import React, { FormEvent, useEffect } from "react";
+import { Task } from "../api/Task";
 import { TaskConfigInputs } from "./TaskConfigInputs";
 import CheckIcon from "@material-ui/icons/Check";
 import UndoIcon from "@material-ui/icons/Undo";
@@ -15,6 +14,7 @@ import ArchiveIcon from "@material-ui/icons/Archive";
 import UnarchiveIcon from "@material-ui/icons/Unarchive";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CloseIcon from "@material-ui/icons/Close";
+import { Meteor } from "meteor/meteor";
 
 const useStyles = makeStyles((theme) => ({
   invisible: {
@@ -34,10 +34,12 @@ export function TaskDetailsForm({
   task: Task;
   closeForm: () => void;
 }) {
-  const [taskState, setTaskState] = useState<Mongo.OptionalId<Task>>(task);
+  const [name, setName] = React.useState("");
+  const [plannedDate, setPlannedDate] = React.useState<Date | null>(null);
 
   useEffect(() => {
-    setTaskState(task);
+    setName(task.name);
+    setPlannedDate(task.plannedDate ?? null);
   }, [task]);
 
   const classes = useStyles();
@@ -66,13 +68,16 @@ export function TaskDetailsForm({
         </IconButton>
       </Box>
       <TaskConfigInputs
-        task={taskState}
-        setTask={(newTask) => {
-          setTaskState(newTask);
-          TaskCollection.update(
-            { _id: task._id },
-            { ...newTask, _id: task._id }
-          );
+        taskId={task._id}
+        name={name}
+        setName={(newName) => {
+          setName(newName);
+          Meteor.call("task.setName", task._id, newName);
+        }}
+        plannedDate={plannedDate}
+        setPlannedDate={(newPlannedDate) => {
+          setPlannedDate(newPlannedDate);
+          Meteor.call("task.setPlannedDate", task._id, newPlannedDate);
         }}
       />
       <p>This task is {task.state}.</p>
@@ -80,10 +85,7 @@ export function TaskDetailsForm({
         {task.state === "pending" ? (
           <Button
             onClick={() => {
-              TaskCollection.update(
-                { _id: task._id },
-                { $set: { state: "complete" } }
-              );
+              Meteor.call("task.setState", task._id, "complete");
             }}
             startIcon={<CheckIcon />}
           >
@@ -93,10 +95,7 @@ export function TaskDetailsForm({
         {task.state === "complete" ? (
           <Button
             onClick={() => {
-              TaskCollection.update(
-                { _id: task._id },
-                { $set: { state: "pending" } }
-              );
+              Meteor.call("task.setState", task._id, "pending");
             }}
             startIcon={<UndoIcon />}
           >
@@ -106,10 +105,7 @@ export function TaskDetailsForm({
         {task.state === "pending" ? (
           <Button
             onClick={() => {
-              TaskCollection.update(
-                { _id: task._id },
-                { $set: { state: "dropped" } }
-              );
+              Meteor.call("task.setState", task._id, "dropped");
             }}
             startIcon={<ArchiveIcon />}
           >
@@ -119,10 +115,7 @@ export function TaskDetailsForm({
         {task.state === "dropped" ? (
           <Button
             onClick={() => {
-              TaskCollection.update(
-                { _id: task._id },
-                { $set: { state: "pending" } }
-              );
+              Meteor.call("task.setState", task._id, "pending");
             }}
             startIcon={<UnarchiveIcon />}
           >
@@ -134,7 +127,7 @@ export function TaskDetailsForm({
         variant="contained"
         color="secondary"
         onClick={() => {
-          TaskCollection.remove({ _id: task._id });
+          Meteor.call("task.delete", task._id);
           closeForm();
         }}
         startIcon={<DeleteIcon />}
