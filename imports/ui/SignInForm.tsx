@@ -1,6 +1,7 @@
 import { Box, Button, makeStyles, TextField } from "@material-ui/core";
 import { Meteor } from "meteor/meteor";
 import React, { useState } from "react";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   formColumn: {
@@ -16,6 +17,7 @@ export function SignInForm() {
   const classes = useStyles();
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const history = useHistory();
   return (
     <Box display="flex" justifyContent="space-around">
       <Box
@@ -25,7 +27,12 @@ export function SignInForm() {
         component="form"
         onSubmit={(e) => {
           e.preventDefault();
-          Meteor.loginWithPassword(username, password);
+          Meteor.loginWithPassword(username, password, (error) => {
+            if (error) {
+              return;
+            }
+            history.push("/tasks");
+          });
         }}
       >
         <h2>Sign in</h2>

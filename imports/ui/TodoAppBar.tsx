@@ -10,9 +10,9 @@ export function TodoAppBar() {
       <Toolbar>
         <h1>To-do app</h1>
         <Box flex={1} />
-        {user !== null ? (
+        {user != null ? (
           <>
-            <span>Welcome, {user?.username}!</span>
+            <span>Welcome, {user.username}!</span>
             <Button
               variant="text"
               color="inherit"
