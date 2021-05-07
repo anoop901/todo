@@ -1,6 +1,6 @@
 import { List, makeStyles } from "@material-ui/core";
 import React from "react";
-import { Task } from "../api/Task";
+import { Task } from "../db/Task";
 import { TaskListItem } from "./TaskListItem";
 
 const useStyles = makeStyles({

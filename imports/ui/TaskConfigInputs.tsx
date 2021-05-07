@@ -1,6 +1,6 @@
 import { Mongo } from "meteor/mongo";
 import React, { useEffect, useRef } from "react";
-import { Task } from "../api/Task";
+import { Task } from "../db/Task";
 import { TextField } from "@material-ui/core";
 import { DateTimePicker } from "@material-ui/pickers";
 

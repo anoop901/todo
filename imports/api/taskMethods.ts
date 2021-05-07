@@ -1,5 +1,5 @@
 import { Meteor } from "meteor/meteor";
-import { TaskCollection } from "./Task";
+import { TaskCollection } from "../db/Task";
 import { check, Match } from "meteor/check";
 
 Meteor.methods({

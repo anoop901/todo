@@ -6,7 +6,7 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import React, { FormEvent, useEffect } from "react";
-import { Task } from "../api/Task";
+import { Task } from "../db/Task";
 import { TaskConfigInputs } from "./TaskConfigInputs";
 import CheckIcon from "@material-ui/icons/Check";
 import UndoIcon from "@material-ui/icons/Undo";

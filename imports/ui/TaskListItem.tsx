@@ -9,7 +9,7 @@ import {
 import classNames from "classnames";
 import { Meteor } from "meteor/meteor";
 import React from "react";
-import { Task } from "../api/Task";
+import { Task } from "../db/Task";
 
 const useStyles = makeStyles({
   droppedCheckbox: { visibility: "hidden" },
