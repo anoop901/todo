@@ -19,9 +19,6 @@ Meteor.methods({
       plannedDate,
     });
   },
-  foo(x) {
-    console.log(x);
-  },
 
   "task.setName"(taskId, name) {
     check(taskId, String);
