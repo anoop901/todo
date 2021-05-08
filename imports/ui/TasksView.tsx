@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 export function TasksView() {
   const user = useTracker(() => Meteor.user());
   const tasks = useTracker(() => {
-    const handler = Meteor.subscribe("task");
+    const handler = Meteor.subscribe("tasks");
     if (!handler.ready()) {
       return [];
     }
