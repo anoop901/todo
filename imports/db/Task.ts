@@ -10,4 +10,4 @@ export interface Task {
   plannedDate?: Date;
 }
 
-export const TaskCollection = new Mongo.Collection<Task>("tasks");
+export const TasksCollection = new Mongo.Collection<Task>("tasks");
