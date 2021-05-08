@@ -69,7 +69,7 @@ Meteor.methods({
     TasksCollection.update(taskId, { $set: { state } });
   },
 
-  "task.delete"(taskId) {
+  "tasks.delete"(taskId) {
     check(taskId, String);
     const existingTask = TasksCollection.findOne(taskId);
 
