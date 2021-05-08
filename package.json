@@ -1,5 +1,5 @@
 {
-  "name": "todo-app",
+  "name": "todo",
   "private": true,
   "scripts": {
     "start": "meteor run",

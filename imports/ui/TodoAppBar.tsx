@@ -9,7 +9,7 @@ export function TodoAppBar() {
   return (
     <AppBar position="static">
       <Toolbar>
-        <h1>To-do app</h1>
+        <h1>Anoop's Todo</h1>
         <Box flex={1} />
         {user != null ? (
           <>
