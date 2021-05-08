@@ -3,7 +3,7 @@ import { TasksCollection } from "../db/Task";
 import { check, Match } from "meteor/check";
 
 Meteor.methods({
-  "task.new"(name, plannedDate) {
+  "tasks.new"(name, plannedDate) {
     check(name, String);
     check(plannedDate, Match.Maybe(Date));
     plannedDate = plannedDate ?? undefined;
@@ -20,7 +20,7 @@ Meteor.methods({
     });
   },
 
-  "task.setName"(taskId, name) {
+  "tasks.setName"(taskId, name) {
     check(taskId, String);
     check(name, String);
     const existingTask = TasksCollection.findOne(taskId);
@@ -35,7 +35,7 @@ Meteor.methods({
     TasksCollection.update(taskId, { $set: { name } });
   },
 
-  "task.setPlannedDate"(taskId, plannedDate) {
+  "tasks.setPlannedDate"(taskId, plannedDate) {
     check(taskId, String);
     check(plannedDate, Match.Maybe(Date));
     const existingTask = TasksCollection.findOne(taskId);
@@ -54,7 +54,7 @@ Meteor.methods({
     }
   },
 
-  "task.setState"(taskId, state) {
+  "tasks.setState"(taskId, state) {
     check(taskId, String);
     check(state, Match.OneOf("pending", "complete", "dropped"));
     const existingTask = TasksCollection.findOne(taskId);

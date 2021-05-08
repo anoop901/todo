@@ -72,12 +72,12 @@ export function TaskDetailsForm({
         name={name}
         setName={(newName) => {
           setName(newName);
-          Meteor.call("task.setName", task._id, newName);
+          Meteor.call("tasks.setName", task._id, newName);
         }}
         plannedDate={plannedDate}
         setPlannedDate={(newPlannedDate) => {
           setPlannedDate(newPlannedDate);
-          Meteor.call("task.setPlannedDate", task._id, newPlannedDate);
+          Meteor.call("tasks.setPlannedDate", task._id, newPlannedDate);
         }}
       />
       <p>This task is {task.state}.</p>
@@ -85,7 +85,7 @@ export function TaskDetailsForm({
         {task.state === "pending" ? (
           <Button
             onClick={() => {
-              Meteor.call("task.setState", task._id, "complete");
+              Meteor.call("tasks.setState", task._id, "complete");
             }}
             startIcon={<CheckIcon />}
           >
@@ -95,7 +95,7 @@ export function TaskDetailsForm({
         {task.state === "complete" ? (
           <Button
             onClick={() => {
-              Meteor.call("task.setState", task._id, "pending");
+              Meteor.call("tasks.setState", task._id, "pending");
             }}
             startIcon={<UndoIcon />}
           >
@@ -105,7 +105,7 @@ export function TaskDetailsForm({
         {task.state === "pending" ? (
           <Button
             onClick={() => {
-              Meteor.call("task.setState", task._id, "dropped");
+              Meteor.call("tasks.setState", task._id, "dropped");
             }}
             startIcon={<ArchiveIcon />}
           >
@@ -115,7 +115,7 @@ export function TaskDetailsForm({
         {task.state === "dropped" ? (
           <Button
             onClick={() => {
-              Meteor.call("task.setState", task._id, "pending");
+              Meteor.call("tasks.setState", task._id, "pending");
             }}
             startIcon={<UnarchiveIcon />}
           >
@@ -127,7 +127,7 @@ export function TaskDetailsForm({
         variant="contained"
         color="secondary"
         onClick={() => {
-          Meteor.call("task.delete", task._id);
+          Meteor.call("tasks.delete", task._id);
           closeForm();
         }}
         startIcon={<DeleteIcon />}

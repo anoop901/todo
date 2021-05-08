@@ -43,9 +43,9 @@ export function TaskListItem({
           onChange={(e) => {
             const checked = e.currentTarget.checked;
             if (checked) {
-              Meteor.call("task.setState", task._id, "complete");
+              Meteor.call("tasks.setState", task._id, "complete");
             } else {
-              Meteor.call("task.setState", task._id, "pending");
+              Meteor.call("tasks.setState", task._id, "pending");
             }
           }}
         />
