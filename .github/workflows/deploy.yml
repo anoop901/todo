@@ -18,10 +18,12 @@ jobs:
       - name: Create deployment token file from secret
         run: printf "$METEOR_SESSION_TOKEN_JSON" > token.json
         env:
-          METEOR_SESSION_TOKEN_JSON : ${{ secrets.METEOR_SESSION_TOKEN_JSON }}
+          METEOR_SESSION_TOKEN_JSON: ${{ secrets.METEOR_SESSION_TOKEN_JSON }}
           
       - name: Meteor login
         run: meteor login
 
       - name: Meteor deploy
         run: meteor deploy anoop901-todo.meteorapp.com
+        env:
+          METEOR_SESSION_FILE: token.json
