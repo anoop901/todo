@@ -1,6 +1,6 @@
 import { useTracker } from "meteor/react-meteor-data";
 import React, { useState } from "react";
-import { TaskCollection } from "../api/Task";
+import { TasksCollection } from "../db/Task";
 import { TaskDetailsForm } from "./TaskDetailsForm";
 import { NewTaskForm } from "./NewTaskForm";
 import { TaskList } from "./TaskList";
@@ -30,11 +30,11 @@ const useStyles = makeStyles((theme) => ({
 export function TasksView() {
   const user = useTracker(() => Meteor.user());
   const tasks = useTracker(() => {
-    const handler = Meteor.subscribe("task");
+    const handler = Meteor.subscribe("tasks");
     if (!handler.ready()) {
       return [];
     }
-    return TaskCollection.find().fetch();
+    return TasksCollection.find().fetch();
   });
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
   const [currentMenu, setCurrentMenu] = useState<
@@ -86,7 +86,7 @@ export function TasksView() {
         ) : null}
         {currentMenu === "TaskDetails" && selectedTaskId !== null ? (
           <TaskDetailsForm
-            task={TaskCollection.findOne({ _id: selectedTaskId })!}
+            task={TasksCollection.findOne({ _id: selectedTaskId })!}
             closeForm={() => {
               setCurrentMenu(null);
               setSelectedTaskId(null);

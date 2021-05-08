@@ -1,9 +1,9 @@
 import { Meteor } from "meteor/meteor";
-import { TaskCollection } from "./Task";
+import { TasksCollection } from "../db/Task";
 import { check, Match } from "meteor/check";
 
 Meteor.methods({
-  "task.new"(name, plannedDate) {
+  "tasks.new"(name, plannedDate) {
     check(name, String);
     check(plannedDate, Match.Maybe(Date));
     plannedDate = plannedDate ?? undefined;
@@ -12,7 +12,7 @@ Meteor.methods({
       throw new Meteor.Error("Not authorized.");
     }
 
-    TaskCollection.insert({
+    TasksCollection.insert({
       owner: this.userId,
       name,
       state: "pending",
@@ -20,10 +20,10 @@ Meteor.methods({
     });
   },
 
-  "task.setName"(taskId, name) {
+  "tasks.setName"(taskId, name) {
     check(taskId, String);
     check(name, String);
-    const existingTask = TaskCollection.findOne(taskId);
+    const existingTask = TasksCollection.findOne(taskId);
 
     if (existingTask === undefined) {
       throw new Meteor.Error("Not found.");
@@ -32,13 +32,13 @@ Meteor.methods({
       throw new Meteor.Error("Not authorized.");
     }
 
-    TaskCollection.update(taskId, { $set: { name } });
+    TasksCollection.update(taskId, { $set: { name } });
   },
 
-  "task.setPlannedDate"(taskId, plannedDate) {
+  "tasks.setPlannedDate"(taskId, plannedDate) {
     check(taskId, String);
     check(plannedDate, Match.Maybe(Date));
-    const existingTask = TaskCollection.findOne(taskId);
+    const existingTask = TasksCollection.findOne(taskId);
 
     if (existingTask === undefined) {
       throw new Meteor.Error("Not found.");
@@ -48,16 +48,16 @@ Meteor.methods({
     }
 
     if (plannedDate === null) {
-      TaskCollection.update(taskId, { $unset: { plannedDate: 0 } });
+      TasksCollection.update(taskId, { $unset: { plannedDate: 0 } });
     } else {
-      TaskCollection.update(taskId, { $set: { plannedDate } });
+      TasksCollection.update(taskId, { $set: { plannedDate } });
     }
   },
 
-  "task.setState"(taskId, state) {
+  "tasks.setState"(taskId, state) {
     check(taskId, String);
     check(state, Match.OneOf("pending", "complete", "dropped"));
-    const existingTask = TaskCollection.findOne(taskId);
+    const existingTask = TasksCollection.findOne(taskId);
 
     if (existingTask === undefined) {
       throw new Meteor.Error("Not found.");
@@ -66,12 +66,12 @@ Meteor.methods({
       throw new Meteor.Error("Not authorized.");
     }
 
-    TaskCollection.update(taskId, { $set: { state } });
+    TasksCollection.update(taskId, { $set: { state } });
   },
 
-  "task.delete"(taskId) {
+  "tasks.delete"(taskId) {
     check(taskId, String);
-    const existingTask = TaskCollection.findOne(taskId);
+    const existingTask = TasksCollection.findOne(taskId);
 
     if (existingTask === undefined) {
       throw new Meteor.Error("Not found.");
@@ -80,6 +80,6 @@ Meteor.methods({
       throw new Meteor.Error("Not authorized.");
     }
 
-    TaskCollection.remove(taskId);
+    TasksCollection.remove(taskId);
   },
 });

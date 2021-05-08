@@ -1,3 +1,3 @@
-import "../imports/api/Task";
-import "/imports/api/taskMethods";
-import "/imports/api/taskPublications";
+import "../imports/db/Task";
+import "../imports/api/tasksMethods";
+import "../imports/api/tasksPublications";

@@ -43,7 +43,7 @@ export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
       className={classes.root}
       onSubmit={(e: FormEvent) => {
         e.preventDefault();
-        Meteor.call("task.new", name, plannedDate);
+        Meteor.call("tasks.new", name, plannedDate);
         reset();
       }}
     >
