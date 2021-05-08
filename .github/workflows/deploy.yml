@@ -14,6 +14,9 @@ jobs:
       
       - name: Setup Meteor.js environment
         uses: meteorengineer/setup-meteor@v1.0.3
+        
+      - name: Install dependencies
+        run: meteor npm install
       
       - name: Create deployment token file from secret
         run: printf "$METEOR_SESSION_TOKEN_JSON" > token.json
