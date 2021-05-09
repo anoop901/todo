@@ -4,7 +4,15 @@ import { TasksCollection } from "../db/Task";
 import { TaskDetailsForm } from "./TaskDetailsForm";
 import { NewTaskForm } from "./NewTaskForm";
 import { TaskList } from "./TaskList";
-import { Box, Button, Drawer } from "@material-ui/core";
+import {
+  InputLabel,
+  Box,
+  Button,
+  Drawer,
+  FormControl,
+  MenuItem,
+  Select,
+} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { makeStyles } from "@material-ui/core";
 import { Redirect } from "react-router";
@@ -25,16 +33,21 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1),
     },
   },
+  filterSelectFormControl: {
+    minWidth: 200,
+  },
 }));
 
 export function TasksView() {
   const user = useTracker(() => Meteor.user());
+  const [filter, setFilter] = useState<"pendingOnly" | "all">("pendingOnly");
   const tasks = useTracker(() => {
     const handler = Meteor.subscribe("tasks");
     if (!handler.ready()) {
       return [];
     }
-    return TasksCollection.find().fetch();
+    const query = filter === "pendingOnly" ? { state: "pending" as const } : {};
+    return TasksCollection.find(query).fetch();
   });
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
   const [currentMenu, setCurrentMenu] = useState<
@@ -61,6 +74,25 @@ export function TasksView() {
           New Task
         </Button>
         <Box flex={1} />
+        <FormControl
+          variant="filled"
+          className={classes.filterSelectFormControl}
+        >
+          <InputLabel id="filter-select-label">Show</InputLabel>
+          <Select
+            labelId="filter-select-label"
+            value={filter}
+            onChange={(e) => {
+              const newFilter = e.target.value;
+              if (newFilter === "pendingOnly" || newFilter === "all") {
+                setFilter(newFilter);
+              }
+            }}
+          >
+            <MenuItem value="pendingOnly">Pending tasks only</MenuItem>
+            <MenuItem value="all">All tasks</MenuItem>
+          </Select>
+        </FormControl>
       </Box>
       <TaskList
         tasks={tasks}
