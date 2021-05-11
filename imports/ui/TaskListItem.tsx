@@ -1,5 +1,4 @@
 import {
-  Box,
   Checkbox,
   ListItem,
   ListItemIcon,
@@ -55,11 +54,8 @@ export function TaskListItem({
           [classes.completeText]: task.state === "complete",
           [classes.droppedText]: task.state === "dropped",
         })}
-      >
-        <Box fontWeight={task.state === "pending" ? "bold" : "normal"}>
-          {task.name}
-        </Box>
-      </ListItemText>
+        primary={task.name}
+      />
     </ListItem>
   );
 }
