@@ -1,4 +1,4 @@
-import { AppBar, Box, Button, Toolbar } from "@material-ui/core";
+import { AppBar, Box, Button, Toolbar, Typography } from "@material-ui/core";
 import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
 import React from "react";
@@ -9,7 +9,9 @@ export function TodoAppBar() {
   return (
     <AppBar position="static">
       <Toolbar>
-        <h1>Anoop's Todo</h1>
+        <Typography variant="h4" component="h1">
+          Anoop's Todo
+        </Typography>
         <Box flex={1} />
         {user != null ? (
           <>

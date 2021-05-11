@@ -1,5 +1,4 @@
 import {
-  Box,
   Checkbox,
   ListItem,
   ListItemIcon,
@@ -7,15 +6,19 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import classNames from "classnames";
+import format from "date-fns/format";
 import { Meteor } from "meteor/meteor";
 import React from "react";
 import { Task } from "../db/Task";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   droppedCheckbox: { visibility: "hidden" },
-  droppedText: { color: "#888888", textDecorationLine: "line-through" },
-  completeText: { color: "#888888" },
-});
+  droppedText: {
+    color: theme.palette.text.disabled,
+    textDecorationLine: "line-through",
+  },
+  completeText: { color: theme.palette.text.disabled },
+}));
 
 export function TaskListItem({
   task,
@@ -55,11 +58,11 @@ export function TaskListItem({
           [classes.completeText]: task.state === "complete",
           [classes.droppedText]: task.state === "dropped",
         })}
-      >
-        <Box fontWeight={task.state === "pending" ? "bold" : "normal"}>
-          {task.name}
-        </Box>
-      </ListItemText>
+        primary={task.name}
+        secondary={
+          task.plannedDate != null ? format(task.plannedDate, "p") : undefined
+        }
+      />
     </ListItem>
   );
 }

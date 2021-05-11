@@ -4,6 +4,7 @@ import {
   ButtonGroup,
   IconButton,
   makeStyles,
+  Typography,
 } from "@material-ui/core";
 import React, { FormEvent, useEffect } from "react";
 import { Task } from "../db/Task";
@@ -56,9 +57,10 @@ export function TaskDetailsForm({
       }}
     >
       <Box display="flex" alignItems="center">
-        <Box flex={1} component="h2">
+        <Typography variant="h5" component="h2">
           Task Details
-        </Box>
+        </Typography>
+        <Box flex={1}></Box>
         <IconButton
           onClick={() => {
             closeForm();
