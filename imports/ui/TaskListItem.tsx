@@ -6,6 +6,7 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import classNames from "classnames";
+import format from "date-fns/format";
 import { Meteor } from "meteor/meteor";
 import React from "react";
 import { Task } from "../db/Task";
@@ -55,6 +56,9 @@ export function TaskListItem({
           [classes.droppedText]: task.state === "dropped",
         })}
         primary={task.name}
+        secondary={
+          task.plannedDate != null ? format(task.plannedDate, "p") : undefined
+        }
       />
     </ListItem>
   );
