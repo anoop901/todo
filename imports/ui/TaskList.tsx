@@ -4,6 +4,7 @@ import { Task } from "../db/Task";
 import { TaskListItem } from "./TaskListItem";
 import { format, isEqual, startOfDay } from "date-fns";
 import sortedIndex from "lodash/sortedIndex";
+import { useMemo } from "react";
 
 const useStyles = makeStyles({
   empty: {
@@ -99,26 +100,28 @@ export function TaskList({
   return tasks.length === 0 ? (
     <p className={classes.empty}>No tasks yet.</p>
   ) : (
-    groupedTasks.map((taskGroup, key) => (
-      <div key={key}>
-        <h3>
-          {"day" in taskGroup
-            ? format(new Date(taskGroup.day), "ccc PP")
-            : "Unscheduled"}
-        </h3>
-        <List>
-          {taskGroup.tasks.map((task) => (
-            <TaskListItem
-              selected={selectedTaskId == task._id}
-              onClick={() => {
-                setSelectedTaskId(task._id);
-              }}
-              key={task._id}
-              task={task}
-            />
-          ))}
-        </List>
-      </div>
-    ))
+    <>
+      {groupedTasks.map((taskGroup, key) => (
+        <div key={key}>
+          <h3>
+            {"day" in taskGroup
+              ? format(new Date(taskGroup.day), "ccc PP")
+              : "Unscheduled"}
+          </h3>
+          <List>
+            {taskGroup.tasks.map((task) => (
+              <TaskListItem
+                selected={selectedTaskId == task._id}
+                onClick={() => {
+                  setSelectedTaskId(task._id);
+                }}
+                key={task._id}
+                task={task}
+              />
+            ))}
+          </List>
+        </div>
+      ))}
+    </>
   );
 }
