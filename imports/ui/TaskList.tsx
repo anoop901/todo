@@ -1,10 +1,9 @@
-import { List, makeStyles } from "@material-ui/core";
+import { List, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
 import { Task } from "../db/Task";
 import { TaskListItem } from "./TaskListItem";
 import { format, isEqual, startOfDay } from "date-fns";
 import sortedIndex from "lodash/sortedIndex";
-import { useMemo } from "react";
 
 const useStyles = makeStyles({
   empty: {
@@ -103,11 +102,11 @@ export function TaskList({
     <>
       {groupedTasks.map((taskGroup, key) => (
         <div key={key}>
-          <h3>
+          <Typography variant="overline">
             {"day" in taskGroup
               ? format(new Date(taskGroup.day), "ccc PP")
               : "Unscheduled"}
-          </h3>
+          </Typography>
           <List>
             {taskGroup.tasks.map((task) => (
               <TaskListItem
