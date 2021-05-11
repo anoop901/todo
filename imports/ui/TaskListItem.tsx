@@ -11,11 +11,14 @@ import { Meteor } from "meteor/meteor";
 import React from "react";
 import { Task } from "../db/Task";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   droppedCheckbox: { visibility: "hidden" },
-  droppedText: { color: "#888888", textDecorationLine: "line-through" },
-  completeText: { color: "#888888" },
-});
+  droppedText: {
+    color: theme.palette.text.disabled,
+    textDecorationLine: "line-through",
+  },
+  completeText: { color: theme.palette.text.disabled },
+}));
 
 export function TaskListItem({
   task,
