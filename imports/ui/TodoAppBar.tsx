@@ -4,13 +4,13 @@ import { useTracker } from "meteor/react-meteor-data";
 import React from "react";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
-export function TodoAppBar() {
+export function TodoAppBar(): JSX.Element {
   const user = useTracker(() => Meteor.user());
   return (
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h4" component="h1">
-          Anoop's Todo
+          Anoop&apos;s Todo
         </Typography>
         <Box flex={1} />
         {user != null ? (

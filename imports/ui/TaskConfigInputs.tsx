@@ -1,6 +1,4 @@
-import { Mongo } from "meteor/mongo";
 import React, { useEffect, useRef } from "react";
-import { Task } from "../db/Task";
 import { TextField } from "@material-ui/core";
 import { DateTimePicker } from "@material-ui/pickers";
 
@@ -16,7 +14,7 @@ export function TaskConfigInputs({
   setName: (name: string) => void;
   plannedDate: Date | null;
   setPlannedDate: (plannedDate: Date | null) => void;
-}) {
+}): JSX.Element {
   const nameInputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     nameInputRef.current?.focus();

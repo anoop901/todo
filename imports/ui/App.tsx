@@ -12,7 +12,7 @@ import {
 } from "react-router-dom";
 import { SignUpForm } from "./SignUpForm";
 
-export function App() {
+export function App(): JSX.Element {
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <TodoAppBar />

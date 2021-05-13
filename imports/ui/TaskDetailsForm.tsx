@@ -34,7 +34,7 @@ export function TaskDetailsForm({
 }: {
   task: Task;
   closeForm: () => void;
-}) {
+}): JSX.Element {
   const [name, setName] = React.useState("");
   const [plannedDate, setPlannedDate] = React.useState<Date | null>(null);
 

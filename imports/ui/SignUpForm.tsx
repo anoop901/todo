@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function SignUpForm() {
+export function SignUpForm(): JSX.Element {
   const classes = useStyles();
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");

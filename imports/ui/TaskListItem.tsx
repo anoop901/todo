@@ -28,7 +28,7 @@ export function TaskListItem({
   task: Task;
   onClick?: () => void;
   selected: boolean;
-}) {
+}): JSX.Element {
   const classes = useStyles();
   return (
     <ListItem button selected={selected} onClick={onClick}>

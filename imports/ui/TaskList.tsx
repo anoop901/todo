@@ -93,7 +93,7 @@ export function TaskList({
   tasks: Task[];
   selectedTaskId: string | null;
   setSelectedTaskId: (selectedTaskId: string | null) => void;
-}) {
+}): JSX.Element {
   const classes = useStyles();
   const groupedTasks = groupTasks(tasks);
   return tasks.length === 0 ? (
