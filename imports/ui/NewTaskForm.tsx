@@ -13,10 +13,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function NewTaskForm({ closeForm }: { closeForm: () => void }) {
+export function NewTaskForm({
+  closeForm,
+}: {
+  closeForm: () => void;
+}): JSX.Element {
   const user = useTracker(() => Meteor.user());
   if (user === null) {
-    return null;
+    return <></>;
   }
 
   const [name, setName] = React.useState("");

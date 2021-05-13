@@ -15,7 +15,11 @@ const useStyles = makeStyles((theme) => ({
     padding: "5px",
   },
 }));
-export function ErrorMessage(props: any) {
+export function ErrorMessage({
+  children: message,
+}: {
+  children: string;
+}): JSX.Element {
   const classes = useStyles();
-  return <div className={classes.root}>{props.children}</div>;
+  return <div className={classes.root}>{message}</div>;
 }

@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function TasksView() {
+export function TasksView(): JSX.Element {
   const user = useTracker(() => Meteor.user());
   const [filter, setFilter] = useState<"pendingOnly" | "all">("pendingOnly");
   const tasks = useTracker(() => {
@@ -118,7 +118,14 @@ export function TasksView() {
         ) : null}
         {currentMenu === "TaskDetails" && selectedTaskId !== null ? (
           <TaskDetailsForm
-            task={TasksCollection.findOne({ _id: selectedTaskId })!}
+            task={
+              TasksCollection.findOne({
+                _id: selectedTaskId,
+              }) ??
+              (() => {
+                throw new Error("selected unknown task");
+              })()
+            }
             closeForm={() => {
               setCurrentMenu(null);
               setSelectedTaskId(null);
