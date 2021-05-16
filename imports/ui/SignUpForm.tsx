@@ -1,4 +1,10 @@
-import { Box, Button, makeStyles, TextField } from "@material-ui/core";
+import {
+  Box,
+  Button,
+  makeStyles,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 import { Accounts } from "meteor/accounts-base";
 import { Meteor } from "meteor/meteor";
 import React, { useState } from "react";
@@ -45,11 +51,13 @@ export function SignUpForm(): JSX.Element {
           });
         }}
       >
-        <h2>Sign up</h2>
+        <Typography variant="h3" component="h2">
+          Sign up
+        </Typography>
         {errorMessage !== null && <ErrorMessage>{errorMessage}</ErrorMessage>}
-        <p>
+        <Typography>
           Already have an account? <Link to="/signin">Sign in.</Link>
-        </p>
+        </Typography>
         <TextField
           variant="filled"
           label="Username"

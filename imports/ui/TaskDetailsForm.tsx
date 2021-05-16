@@ -82,7 +82,7 @@ export function TaskDetailsForm({
           Meteor.call("tasks.setPlannedDate", task._id, newPlannedDate);
         }}
       />
-      <p>This task is {task.state}.</p>
+      <Typography>This task is {task.state}.</Typography>
       <ButtonGroup variant="contained" color="primary" orientation="vertical">
         {task.state === "pending" ? (
           <Button

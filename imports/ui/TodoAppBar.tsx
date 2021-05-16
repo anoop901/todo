@@ -9,14 +9,14 @@ export function TodoAppBar(): JSX.Element {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography variant="h4" component="h1">
+        <Typography variant="h6" component="h1">
           Anoop&apos;s Todo
         </Typography>
         <Box flex={1} />
         {user != null ? (
           <>
             <AccountCircleIcon />
-            <span>{user.username}</span>
+            <Typography>{user.username}</Typography>
             <Button
               variant="text"
               color="inherit"
