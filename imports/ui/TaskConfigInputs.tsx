@@ -1,6 +1,18 @@
 import React, { useEffect, useRef } from "react";
-import { TextField } from "@material-ui/core";
-import { DateTimePicker } from "@material-ui/pickers";
+import { Box, TextField } from "@material-ui/core";
+import { DatePicker, TimePicker } from "@material-ui/pickers";
+import {
+  getDate,
+  getHours,
+  getMinutes,
+  getMonth,
+  getYear,
+  setDate,
+  setHours,
+  setMinutes,
+  setMonth,
+  setYear,
+} from "date-fns";
 
 export function TaskConfigInputs({
   taskId,
@@ -33,15 +45,57 @@ export function TaskConfigInputs({
         }}
         autoComplete="off"
       />
-      <DateTimePicker
-        inputVariant="filled"
-        label="Planned date"
-        clearable
-        value={plannedDate}
-        onChange={(newPlannedDate) => {
-          setPlannedDate(newPlannedDate);
-        }}
-      />
+      <Box display="flex">
+        <DatePicker
+          style={{ flex: 3 }}
+          inputVariant="filled"
+          label="Planned date"
+          clearable
+          value={plannedDate}
+          format="ccc, PP"
+          onChange={(newPlannedDateWithoutTime) => {
+            if (plannedDate == null) {
+              setPlannedDate(newPlannedDateWithoutTime);
+              return;
+            }
+            if (newPlannedDateWithoutTime == null) {
+              setPlannedDate(null);
+              return;
+            }
+            const newPlannedDate = setYear(
+              setMonth(
+                setDate(plannedDate, getDate(newPlannedDateWithoutTime)),
+                getMonth(newPlannedDateWithoutTime)
+              ),
+              getYear(newPlannedDateWithoutTime)
+            );
+            setPlannedDate(newPlannedDate);
+          }}
+        />
+        <TimePicker
+          style={{ flex: 2 }}
+          inputVariant="filled"
+          label="Planned time"
+          value={plannedDate}
+          format="p"
+          clearable
+          disabled={plannedDate == null}
+          onChange={(newPlannedTime) => {
+            if (plannedDate == null) {
+              return;
+            }
+            if (newPlannedTime == null) {
+              setPlannedDate(null);
+              return;
+            }
+            const newPlannedDate = setHours(
+              setMinutes(plannedDate, getMinutes(newPlannedTime)),
+              getHours(newPlannedTime)
+            );
+            setPlannedDate(newPlannedDate);
+          }}
+        />
+      </Box>
     </>
   );
 }

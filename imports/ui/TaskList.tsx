@@ -104,7 +104,7 @@ export function TaskList({
         <div key={key}>
           <Typography variant="overline">
             {"day" in taskGroup
-              ? format(new Date(taskGroup.day), "ccc PP")
+              ? format(new Date(taskGroup.day), "ccc, PP")
               : "Unscheduled"}
           </Typography>
           <List>
