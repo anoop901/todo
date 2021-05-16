@@ -1,4 +1,10 @@
-import { Box, Button, IconButton, makeStyles } from "@material-ui/core";
+import {
+  Box,
+  Button,
+  IconButton,
+  makeStyles,
+  Typography,
+} from "@material-ui/core";
 import React, { FormEvent, useEffect, useRef } from "react";
 import { TaskConfigInputs } from "./TaskConfigInputs";
 import CloseIcon from "@material-ui/icons/Close";
@@ -52,9 +58,10 @@ export function NewTaskForm({
       }}
     >
       <Box display="flex" alignItems="center">
-        <Box flex={1} component="h2">
+        <Typography variant="h5" component="h2">
           New Task
-        </Box>
+        </Typography>
+        <Box flex={1}></Box>
         <IconButton
           onClick={() => {
             reset();
