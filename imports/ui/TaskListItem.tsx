@@ -10,6 +10,8 @@ import format from "date-fns/format";
 import { Meteor } from "meteor/meteor";
 import React from "react";
 import { Task } from "../db/Task";
+import { useAppDispatch } from "./reducers/hooks";
+import { setSelectedTask } from "./reducers/tasksViewSlice";
 
 const useStyles = makeStyles((theme) => ({
   droppedCheckbox: { visibility: "hidden" },
@@ -22,16 +24,21 @@ const useStyles = makeStyles((theme) => ({
 
 export function TaskListItem({
   task,
-  onClick,
   selected,
 }: {
   task: Task;
-  onClick?: () => void;
   selected: boolean;
 }): JSX.Element {
   const classes = useStyles();
+  const dispatch = useAppDispatch();
   return (
-    <ListItem button selected={selected} onClick={onClick}>
+    <ListItem
+      button
+      selected={selected}
+      onClick={() => {
+        dispatch(setSelectedTask(task._id));
+      }}
+    >
       <ListItemIcon>
         <Checkbox
           color="default"

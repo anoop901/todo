@@ -4,6 +4,7 @@ import { Task } from "../db/Task";
 import { TaskListItem } from "./TaskListItem";
 import { format, isEqual, startOfDay } from "date-fns";
 import sortedIndex from "lodash/sortedIndex";
+import { useAppSelector } from "./reducers/hooks";
 
 const useStyles = makeStyles({
   empty: {
@@ -85,16 +86,11 @@ function groupTasks(tasks: Task[]): TaskGroup[] {
   return taskGroups;
 }
 
-export function TaskList({
-  tasks,
-  selectedTaskId,
-  setSelectedTaskId,
-}: {
-  tasks: Task[];
-  selectedTaskId: string | null;
-  setSelectedTaskId: (selectedTaskId: string | null) => void;
-}): JSX.Element {
+export function TaskList({ tasks }: { tasks: Task[] }): JSX.Element {
   const classes = useStyles();
+  const selectedTaskId = useAppSelector(
+    (state) => state.tasksView.selectedTaskId
+  );
   const groupedTasks = groupTasks(tasks);
   return tasks.length === 0 ? (
     <p className={classes.empty}>No tasks yet.</p>
@@ -111,9 +107,6 @@ export function TaskList({
             {taskGroup.tasks.map((task) => (
               <TaskListItem
                 selected={selectedTaskId == task._id}
-                onClick={() => {
-                  setSelectedTaskId(task._id);
-                }}
                 key={task._id}
                 task={task}
               />
