@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import React, { FormEvent, useEffect } from "react";
-import { Task } from "../db/Task";
+import { TasksCollection } from "../db/Task";
 import { TaskConfigInputs } from "./TaskConfigInputs";
 import CheckIcon from "@material-ui/icons/Check";
 import UndoIcon from "@material-ui/icons/Undo";
@@ -17,7 +17,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import CloseIcon from "@material-ui/icons/Close";
 import { Meteor } from "meteor/meteor";
 import { setMenuClosed } from "./reducers/tasksViewSlice";
-import { useAppDispatch } from "./reducers/hooks";
+import { useAppDispatch, useAppSelector } from "./reducers/hooks";
+import { useTracker } from "meteor/react-meteor-data";
 
 const useStyles = makeStyles((theme) => ({
   invisible: {
@@ -30,10 +31,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function TaskDetailsForm({ task }: { task: Task }): JSX.Element {
+export function TaskDetailsForm(): JSX.Element {
   const dispatch = useAppDispatch();
   const [name, setName] = React.useState("");
   const [plannedDate, setPlannedDate] = React.useState<Date | null>(null);
+  const selectedTaskId = useAppSelector(
+    (state) => state.tasksView.selectedTaskId
+  );
+  const task = useTracker(() => {
+    const handler = Meteor.subscribe("tasks");
+    if (!handler.ready()) {
+      return null;
+    }
+    if (selectedTaskId == null) {
+      return null;
+    }
+    const selectedTask =
+      TasksCollection.findOne({ _id: selectedTaskId }) ?? null;
+    return selectedTask;
+  }, [selectedTaskId]);
 
   useEffect(() => {
     if (task != null) {

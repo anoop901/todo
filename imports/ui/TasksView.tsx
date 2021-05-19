@@ -1,6 +1,5 @@
 import { useTracker } from "meteor/react-meteor-data";
 import React, { useState } from "react";
-import { TasksCollection } from "../db/Task";
 import { TaskDetailsForm } from "./TaskDetailsForm";
 import { NewTaskForm } from "./NewTaskForm";
 import { TaskList } from "./TaskList";
@@ -43,24 +42,6 @@ const useStyles = makeStyles((theme) => ({
 export function TasksView(): JSX.Element {
   const user = useTracker(() => Meteor.user());
   const [filter, setFilter] = useState<"pendingOnly" | "all">("pendingOnly");
-  const selectedTaskId = useAppSelector(
-    (state) => state.tasksView.selectedTaskId
-  );
-  const { tasks, selectedTask } = useTracker(() => {
-    const handler = Meteor.subscribe("tasks");
-    if (!handler.ready()) {
-      return { tasks: [], selectedTask: null };
-    }
-
-    const query = filter === "pendingOnly" ? { state: "pending" as const } : {};
-    const tasks = TasksCollection.find(query).fetch();
-
-    const selectedTask =
-      selectedTaskId == null
-        ? null
-        : TasksCollection.findOne({ _id: selectedTaskId }) ?? null;
-    return { tasks, selectedTask };
-  });
   const currentMenu = useAppSelector((state) => state.tasksView.currentMenu);
   const classes = useStyles();
   const dispatch = useAppDispatch();
@@ -103,7 +84,7 @@ export function TasksView(): JSX.Element {
           </Select>
         </FormControl>
       </Box>
-      <TaskList tasks={tasks} />
+      <TaskList filter={filter} />
       <Drawer
         variant="persistent"
         anchor="right"
@@ -111,9 +92,7 @@ export function TasksView(): JSX.Element {
         PaperProps={{ elevation: 16, className: classes.sidebar }}
       >
         {currentMenu === "NewTask" ? <NewTaskForm /> : null}
-        {currentMenu === "TaskDetails" && selectedTask != null ? (
-          <TaskDetailsForm task={selectedTask} />
-        ) : null}
+        {currentMenu === "TaskDetails" ? <TaskDetailsForm /> : null}
       </Drawer>
     </>
   );
