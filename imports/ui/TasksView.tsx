@@ -1,6 +1,5 @@
 import { useTracker } from "meteor/react-meteor-data";
 import React, { useState } from "react";
-import { TasksCollection } from "../db/Task";
 import { TaskDetailsForm } from "./TaskDetailsForm";
 import { NewTaskForm } from "./NewTaskForm";
 import { TaskList } from "./TaskList";
@@ -17,6 +16,8 @@ import AddIcon from "@material-ui/icons/Add";
 import { makeStyles } from "@material-ui/core";
 import { Redirect } from "react-router";
 import { Meteor } from "meteor/meteor";
+import { setNewTaskMenuShown } from "./reducers/tasksViewSlice";
+import { useAppDispatch, useAppSelector } from "./reducers/hooks";
 
 const useStyles = makeStyles((theme) => ({
   sidebar: {
@@ -41,19 +42,9 @@ const useStyles = makeStyles((theme) => ({
 export function TasksView(): JSX.Element {
   const user = useTracker(() => Meteor.user());
   const [filter, setFilter] = useState<"pendingOnly" | "all">("pendingOnly");
-  const tasks = useTracker(() => {
-    const handler = Meteor.subscribe("tasks");
-    if (!handler.ready()) {
-      return [];
-    }
-    const query = filter === "pendingOnly" ? { state: "pending" as const } : {};
-    return TasksCollection.find(query).fetch();
-  });
-  const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
-  const [currentMenu, setCurrentMenu] = useState<
-    "TaskDetails" | "NewTask" | null
-  >(null);
+  const currentMenu = useAppSelector((state) => state.tasksView.currentMenu);
   const classes = useStyles();
+  const dispatch = useAppDispatch();
 
   if (user === null) {
     return <Redirect to="/signin" />;
@@ -66,8 +57,7 @@ export function TasksView(): JSX.Element {
           color="primary"
           disabled={currentMenu === "NewTask"}
           onClick={() => {
-            setCurrentMenu("NewTask");
-            setSelectedTaskId(null);
+            dispatch(setNewTaskMenuShown());
           }}
           startIcon={<AddIcon />}
         >
@@ -94,44 +84,15 @@ export function TasksView(): JSX.Element {
           </Select>
         </FormControl>
       </Box>
-      <TaskList
-        tasks={tasks}
-        selectedTaskId={selectedTaskId}
-        setSelectedTaskId={(newSelectedTaskId) => {
-          setCurrentMenu("TaskDetails");
-          setSelectedTaskId(newSelectedTaskId);
-        }}
-      />
+      <TaskList filter={filter} />
       <Drawer
         variant="persistent"
         anchor="right"
         open={currentMenu !== null}
         PaperProps={{ elevation: 16, className: classes.sidebar }}
       >
-        {currentMenu === "NewTask" ? (
-          <NewTaskForm
-            closeForm={() => {
-              setCurrentMenu(null);
-              setSelectedTaskId(null);
-            }}
-          />
-        ) : null}
-        {currentMenu === "TaskDetails" && selectedTaskId !== null ? (
-          <TaskDetailsForm
-            task={
-              TasksCollection.findOne({
-                _id: selectedTaskId,
-              }) ??
-              (() => {
-                throw new Error("selected unknown task");
-              })()
-            }
-            closeForm={() => {
-              setCurrentMenu(null);
-              setSelectedTaskId(null);
-            }}
-          />
-        ) : null}
+        {currentMenu === "NewTask" ? <NewTaskForm /> : null}
+        {currentMenu === "TaskDetails" ? <TaskDetailsForm /> : null}
       </Drawer>
     </>
   );

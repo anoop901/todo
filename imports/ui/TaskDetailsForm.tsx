@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import React, { FormEvent, useEffect } from "react";
-import { Task } from "../db/Task";
+import { TasksCollection } from "../db/Task";
 import { TaskConfigInputs } from "./TaskConfigInputs";
 import CheckIcon from "@material-ui/icons/Check";
 import UndoIcon from "@material-ui/icons/Undo";
@@ -16,6 +16,9 @@ import UnarchiveIcon from "@material-ui/icons/Unarchive";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CloseIcon from "@material-ui/icons/Close";
 import { Meteor } from "meteor/meteor";
+import { setMenuClosed } from "./reducers/tasksViewSlice";
+import { useAppDispatch, useAppSelector } from "./reducers/hooks";
+import { useTracker } from "meteor/react-meteor-data";
 
 const useStyles = makeStyles((theme) => ({
   invisible: {
@@ -28,22 +31,38 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function TaskDetailsForm({
-  task,
-  closeForm,
-}: {
-  task: Task;
-  closeForm: () => void;
-}): JSX.Element {
+export function TaskDetailsForm(): JSX.Element {
+  const dispatch = useAppDispatch();
   const [name, setName] = React.useState("");
   const [plannedDate, setPlannedDate] = React.useState<Date | null>(null);
+  const selectedTaskId = useAppSelector(
+    (state) => state.tasksView.selectedTaskId
+  );
+  const task = useTracker(() => {
+    const handler = Meteor.subscribe("tasks");
+    if (!handler.ready()) {
+      return null;
+    }
+    if (selectedTaskId == null) {
+      return null;
+    }
+    const selectedTask =
+      TasksCollection.findOne({ _id: selectedTaskId }) ?? null;
+    return selectedTask;
+  }, [selectedTaskId]);
 
   useEffect(() => {
-    setName(task.name);
-    setPlannedDate(task.plannedDate ?? null);
+    if (task != null) {
+      setName(task.name);
+      setPlannedDate(task.plannedDate ?? null);
+    }
   }, [task]);
 
   const classes = useStyles();
+
+  if (task == null) {
+    return <></>;
+  }
 
   return (
     <Box
@@ -53,7 +72,7 @@ export function TaskDetailsForm({
       className={classes.root}
       onSubmit={(e: FormEvent) => {
         e.preventDefault();
-        closeForm();
+        dispatch(setMenuClosed());
       }}
     >
       <Box display="flex" alignItems="center">
@@ -63,7 +82,7 @@ export function TaskDetailsForm({
         <Box flex={1}></Box>
         <IconButton
           onClick={() => {
-            closeForm();
+            dispatch(setMenuClosed());
           }}
         >
           <CloseIcon />
@@ -130,7 +149,7 @@ export function TaskDetailsForm({
         color="secondary"
         onClick={() => {
           Meteor.call("tasks.delete", task._id);
-          closeForm();
+          dispatch(setMenuClosed());
         }}
         startIcon={<DeleteIcon />}
       >

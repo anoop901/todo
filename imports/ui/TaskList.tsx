@@ -1,9 +1,12 @@
 import { List, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
-import { Task } from "../db/Task";
+import { Task, TasksCollection } from "../db/Task";
 import { TaskListItem } from "./TaskListItem";
 import { format, isEqual, startOfDay } from "date-fns";
 import sortedIndex from "lodash/sortedIndex";
+import { useAppSelector } from "./reducers/hooks";
+import { Meteor } from "meteor/meteor";
+import { useTracker } from "meteor/react-meteor-data";
 
 const useStyles = makeStyles({
   empty: {
@@ -86,15 +89,22 @@ function groupTasks(tasks: Task[]): TaskGroup[] {
 }
 
 export function TaskList({
-  tasks,
-  selectedTaskId,
-  setSelectedTaskId,
+  filter,
 }: {
-  tasks: Task[];
-  selectedTaskId: string | null;
-  setSelectedTaskId: (selectedTaskId: string | null) => void;
+  filter: "pendingOnly" | "all";
 }): JSX.Element {
   const classes = useStyles();
+  const selectedTaskId = useAppSelector(
+    (state) => state.tasksView.selectedTaskId
+  );
+  const tasks = useTracker(() => {
+    const handler = Meteor.subscribe("tasks");
+    if (!handler.ready()) {
+      return [];
+    }
+    const query = filter === "pendingOnly" ? { state: "pending" as const } : {};
+    return TasksCollection.find(query).fetch();
+  });
   const groupedTasks = groupTasks(tasks);
   return tasks.length === 0 ? (
     <p className={classes.empty}>No tasks yet.</p>
@@ -111,9 +121,6 @@ export function TaskList({
             {taskGroup.tasks.map((task) => (
               <TaskListItem
                 selected={selectedTaskId == task._id}
-                onClick={() => {
-                  setSelectedTaskId(task._id);
-                }}
                 key={task._id}
                 task={task}
               />

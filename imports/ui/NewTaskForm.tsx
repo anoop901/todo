@@ -10,6 +10,8 @@ import { TaskConfigInputs } from "./TaskConfigInputs";
 import CloseIcon from "@material-ui/icons/Close";
 import { useTracker } from "meteor/react-meteor-data";
 import { Meteor } from "meteor/meteor";
+import { setMenuClosed } from "./reducers/tasksViewSlice";
+import { useAppDispatch } from "./reducers/hooks";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,11 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function NewTaskForm({
-  closeForm,
-}: {
-  closeForm: () => void;
-}): JSX.Element {
+export function NewTaskForm(): JSX.Element {
   const user = useTracker(() => Meteor.user());
   if (user === null) {
     return <></>;
@@ -38,11 +36,12 @@ export function NewTaskForm({
   }, []);
 
   const classes = useStyles();
+  const dispatch = useAppDispatch();
 
   function reset() {
     setName("");
     setPlannedDate(null);
-    closeForm();
+    dispatch(setMenuClosed());
   }
 
   return (
