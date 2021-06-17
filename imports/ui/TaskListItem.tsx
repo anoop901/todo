@@ -6,8 +6,6 @@ import {
   ListItemSecondaryAction,
   ListItemText,
   makeStyles,
-  Menu,
-  MenuItem,
 } from "@material-ui/core";
 import classNames from "classnames";
 import format from "date-fns/format";
@@ -17,20 +15,24 @@ import { Task } from "../db/Task";
 import { useAppDispatch } from "./reducers/hooks";
 import { setSelectedTask } from "./reducers/tasksViewSlice";
 import DeleteIcon from "@material-ui/icons/Delete";
-import UpdateIcon from "@material-ui/icons/Update";
+import { PostponeTaskButton } from "./PostponeTaskButton";
 
 const useStyles = makeStyles((theme) => ({
   droppedCheckbox: { visibility: "hidden" },
+  text: {
+    wordWrap: "break-word",
+    paddingRight: "100px",
+  },
   droppedText: {
     color: theme.palette.text.disabled,
     textDecorationLine: "line-through",
   },
   completeText: { color: theme.palette.text.disabled },
-  listItemSecondaryAction: {
+  actionButtons: {
     visibility: "hidden"
   },
   listItem: {
-    "&:hover $listItemSecondaryAction": {
+    "&:hover $actionButtons": {
       visibility: "inherit",
     }
   },
@@ -40,6 +42,14 @@ const useStyles = makeStyles((theme) => ({
     display: "inline-block",
   }
 }));
+
+function DeleteTaskButton({ task }: { task: Task }): JSX.Element {
+  return (<IconButton edge="end" aria-label="delete" onClick={() => {
+    Meteor.call("tasks.delete", task._id);
+  }}>
+    <DeleteIcon />
+  </IconButton>);
+}
 
 export function TaskListItem({
   task,
@@ -51,23 +61,12 @@ export function TaskListItem({
   const classes = useStyles();
   const dispatch = useAppDispatch();
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const postponeClicked = (event: any) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const closePostponeMenu = () => {
-    setAnchorEl(null);
-  };
-  const postponeBy = (hoursToPostponeBy: number) => function () {
+  const postponeBy = (millisecondsToPostponeBy: number) => {
     if (task.plannedDate === undefined) {
       return;
     }
-    const newDate = new Date(task.plannedDate.getTime());
-    newDate.setHours(task.plannedDate.getHours() + hoursToPostponeBy);
-
+    const newDate = new Date(task.plannedDate.getTime() + millisecondsToPostponeBy);
     Meteor.call("tasks.setPlannedDate", task._id, newDate);
-    closePostponeMenu();
   }
 
   return (
@@ -103,38 +102,25 @@ export function TaskListItem({
         />
       </ListItemIcon>
       <ListItemText
-        className={classNames({
-          [classes.completeText]: task.state === "complete",
-          [classes.droppedText]: task.state === "dropped",
-        })}
+        className={classNames(
+          classes.text,
+          {
+            [classes.completeText]: task.state === "complete",
+            [classes.droppedText]: task.state === "dropped",
+          })}
         primary={task.name}
         secondary={
           task.plannedDate != null ? format(task.plannedDate, "p") : undefined
         }
       />
-      <ListItemSecondaryAction className={classes.listItemSecondaryAction}>
-        <IconButton edge="end" aria-label="postpone" onClick={postponeClicked}
-          hidden={task.plannedDate === undefined}>
-          <UpdateIcon />
-        </IconButton>
-        <Menu
-          id="postpone-menu"
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={closePostponeMenu}
-        >
-          <MenuItem onClick={postponeBy(1)}>+1h</MenuItem>
-          <MenuItem onClick={postponeBy(24)}>+1d</MenuItem>
-          <MenuItem onClick={postponeBy(24 * 7)}>+1w</MenuItem>
-        </Menu>
+      <ListItemSecondaryAction className={classes.actionButtons}>
+        {task.plannedDate ? <span>
+          <PostponeTaskButton postponeBy={postponeBy} />
+          <div className={classes.listItemSecondaryActionSpacer} />
+        </span> : null}
+        <DeleteTaskButton task={task} />
         <div className={classes.listItemSecondaryActionSpacer} />
-        <IconButton edge="end" aria-label="delete" onClick={() => {
-          Meteor.call("tasks.delete", task._id);
-        }}>
-          <DeleteIcon />
-        </IconButton>
       </ListItemSecondaryAction>
-    </ListItem>
+    </ListItem >
   );
 }

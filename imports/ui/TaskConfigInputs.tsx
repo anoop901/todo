@@ -13,6 +13,7 @@ import {
   setMonth,
   setYear,
 } from "date-fns";
+import { PostponeTaskButton } from "./PostponeTaskButton";
 
 export function TaskConfigInputs({
   taskId,
@@ -32,6 +33,14 @@ export function TaskConfigInputs({
     nameInputRef.current?.focus();
     nameInputRef.current?.select();
   }, [taskId]);
+  const postponeBy = (millisecondsToPostponeBy: number) => {
+    if (plannedDate == null) {
+      return;
+    }
+    const newDate = new Date(plannedDate.getTime() + millisecondsToPostponeBy);
+    setPlannedDate(newDate);
+  }
+
   return (
     <>
       <TextField
@@ -95,6 +104,7 @@ export function TaskConfigInputs({
             setPlannedDate(newPlannedDate);
           }}
         />
+        {plannedDate !== null ? <PostponeTaskButton postponeBy={postponeBy} /> : null}
       </Box>
     </>
   );
