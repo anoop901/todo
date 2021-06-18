@@ -60,15 +60,6 @@ export function TaskListItem({
 }): JSX.Element {
   const classes = useStyles();
   const dispatch = useAppDispatch();
-
-  const postponeBy = (millisecondsToPostponeBy: number) => {
-    if (task.plannedDate === undefined) {
-      return;
-    }
-    const newDate = new Date(task.plannedDate.getTime() + millisecondsToPostponeBy);
-    Meteor.call("tasks.setPlannedDate", task._id, newDate);
-  }
-
   return (
     <ListItem
       button
@@ -115,7 +106,7 @@ export function TaskListItem({
       />
       <ListItemSecondaryAction className={classes.actionButtons}>
         {task.plannedDate ? <span>
-          <PostponeTaskButton postponeBy={postponeBy} />
+          <PostponeTaskButton taskId={task._id} />
           <div className={classes.listItemSecondaryActionSpacer} />
         </span> : null}
         <DeleteTaskButton task={task} />
