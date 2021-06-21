@@ -48,7 +48,7 @@ export function TaskConfigInputs({
       />
       <Box display="flex">
         <DatePicker
-          style={{ flex: 3 }}
+          style={{ flex: 2 }}
           inputVariant="filled"
           label="Planned date"
           clearable
@@ -96,7 +96,7 @@ export function TaskConfigInputs({
             setPlannedDate(newPlannedDate);
           }}
         />
-        {taskId !== undefined && plannedDate !== null ? <PostponeTaskButton taskId={taskId} /> : null}
+        {taskId !== undefined && plannedDate !== null ? <div><PostponeTaskButton taskId={taskId} /></div> : null}
       </Box>
     </>
   );
