@@ -1,7 +1,9 @@
 import {
   Checkbox,
+  IconButton,
   ListItem,
   ListItemIcon,
+  ListItemSecondaryAction,
   ListItemText,
   makeStyles,
 } from "@material-ui/core";
@@ -12,15 +14,42 @@ import React from "react";
 import { Task } from "../db/Task";
 import { useAppDispatch } from "./reducers/hooks";
 import { setSelectedTask } from "./reducers/tasksViewSlice";
+import DeleteIcon from "@material-ui/icons/Delete";
+import { PostponeTaskButton } from "./PostponeTaskButton";
 
 const useStyles = makeStyles((theme) => ({
   droppedCheckbox: { visibility: "hidden" },
+  text: {
+    wordWrap: "break-word",
+    paddingRight: "100px",
+  },
   droppedText: {
     color: theme.palette.text.disabled,
     textDecorationLine: "line-through",
   },
   completeText: { color: theme.palette.text.disabled },
+  actionButtons: {
+    visibility: "hidden"
+  },
+  listItem: {
+    "&:hover $actionButtons": {
+      visibility: "inherit",
+    }
+  },
+  listItemSecondaryActionSpacer: {
+    width: "25px",
+    height: "auto",
+    display: "inline-block",
+  }
 }));
+
+function DeleteTaskButton({ task }: { task: Task }): JSX.Element {
+  return (<IconButton edge="end" aria-label="delete" onClick={() => {
+    Meteor.call("tasks.delete", task._id);
+  }}>
+    <DeleteIcon />
+  </IconButton>);
+}
 
 export function TaskListItem({
   task,
@@ -37,6 +66,9 @@ export function TaskListItem({
       selected={selected}
       onClick={() => {
         dispatch(setSelectedTask(task._id));
+      }}
+      classes={{
+        container: classes.listItem
       }}
     >
       <ListItemIcon>
@@ -61,15 +93,25 @@ export function TaskListItem({
         />
       </ListItemIcon>
       <ListItemText
-        className={classNames({
-          [classes.completeText]: task.state === "complete",
-          [classes.droppedText]: task.state === "dropped",
-        })}
+        className={classNames(
+          classes.text,
+          {
+            [classes.completeText]: task.state === "complete",
+            [classes.droppedText]: task.state === "dropped",
+          })}
         primary={task.name}
         secondary={
           task.plannedDate != null ? format(task.plannedDate, "p") : undefined
         }
       />
-    </ListItem>
+      <ListItemSecondaryAction className={classes.actionButtons}>
+        {task.plannedDate ? <span>
+          <PostponeTaskButton taskId={task._id} />
+          <div className={classes.listItemSecondaryActionSpacer} />
+        </span> : null}
+        <DeleteTaskButton task={task} />
+        <div className={classes.listItemSecondaryActionSpacer} />
+      </ListItemSecondaryAction>
+    </ListItem >
   );
 }
