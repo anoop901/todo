@@ -28,27 +28,25 @@ const useStyles = makeStyles((theme) => ({
     textDecorationLine: "line-through",
   },
   completeText: { color: theme.palette.text.disabled },
-  actionButtons: {
-    visibility: "hidden"
-  },
-  listItem: {
-    "&:hover $actionButtons": {
-      visibility: "inherit",
-    }
-  },
   listItemSecondaryActionSpacer: {
     width: "25px",
     height: "auto",
     display: "inline-block",
-  }
+  },
 }));
 
 function DeleteTaskButton({ task }: { task: Task }): JSX.Element {
-  return (<IconButton edge="end" aria-label="delete" onClick={() => {
-    Meteor.call("tasks.delete", task._id);
-  }}>
-    <DeleteIcon />
-  </IconButton>);
+  return (
+    <IconButton
+      edge="end"
+      aria-label="delete"
+      onClick={() => {
+        Meteor.call("tasks.delete", task._id);
+      }}
+    >
+      <DeleteIcon />
+    </IconButton>
+  );
 }
 
 export function TaskListItem({
@@ -66,9 +64,6 @@ export function TaskListItem({
       selected={selected}
       onClick={() => {
         dispatch(setSelectedTask(task._id));
-      }}
-      classes={{
-        container: classes.listItem
       }}
     >
       <ListItemIcon>
@@ -93,25 +88,25 @@ export function TaskListItem({
         />
       </ListItemIcon>
       <ListItemText
-        className={classNames(
-          classes.text,
-          {
-            [classes.completeText]: task.state === "complete",
-            [classes.droppedText]: task.state === "dropped",
-          })}
+        className={classNames(classes.text, {
+          [classes.completeText]: task.state === "complete",
+          [classes.droppedText]: task.state === "dropped",
+        })}
         primary={task.name}
         secondary={
           task.plannedDate != null ? format(task.plannedDate, "p") : undefined
         }
       />
-      <ListItemSecondaryAction className={classes.actionButtons}>
-        {task.plannedDate ? <span>
-          <PostponeTaskButton taskId={task._id} />
-          <div className={classes.listItemSecondaryActionSpacer} />
-        </span> : null}
+      <ListItemSecondaryAction>
+        {task.plannedDate ? (
+          <span>
+            <PostponeTaskButton taskId={task._id} />
+            <div className={classes.listItemSecondaryActionSpacer} />
+          </span>
+        ) : null}
         <DeleteTaskButton task={task} />
         <div className={classes.listItemSecondaryActionSpacer} />
       </ListItemSecondaryAction>
-    </ListItem >
+    </ListItem>
   );
 }
